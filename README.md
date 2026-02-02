@@ -16,7 +16,7 @@ AI-powered legal companion that turns Hindi voice notes about consumer issues in
 - **AWS Lambda + S3 + DynamoDB** - Serverless backend
 
 ### 🚀 Key Features
-1. **Voice-First Hindi Intake** - Speak naturally, no typing needed
+1. **Voice-First Intake** - Speak naturally, no typing needed
 2. **AI Strategy Adviser** - Identifies legal strategy automatically
 3. **Evidence Validator** - Rule-based checklist for case strength
 4. **Plain-Language Law Guide** - Consumer Protection Act explained simply
