@@ -173,4 +173,5 @@ graph LR
 ---
 
 
-**The Bottom Line**: This isn't just a hackathon project—it's a production-ready architecture that can serve 1 million users while maintaining the 120-second promise that makes justice accessible to Ramesh and millions like him across India.
+**The Bottom Line**: This isn't just a hackathon project—it's a production-ready architecture that can serve 1 million users while maintaining the sub-2-minute promise that makes justice accessible to Ramesh and millions like him across India.
+
