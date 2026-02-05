@@ -138,11 +138,11 @@ graph LR
 
 ### Legal & Ethical Considerations
 
-**Disclaimers**: Clear "guidance not legal advice" messaging throughout interface
-**Privacy**: Voice recordings deleted after processing, user data anonymized
-**Accuracy**: All legal citations verified against Consumer Protection Act 2019
-**Liability**: System provides document templates, users responsible for filing accuracy
-**Compliance**: Data stored in Indian AWS regions, GDPR-equivalent privacy protection
+- **Disclaimers**: Clear "guidance not legal advice" messaging throughout interface
+- **Privacy**: Voice recordings deleted after processing, user data anonymized
+- **Accuracy**: All legal citations verified against Consumer Protection Act 2019
+- **Liability**: System provides document templates, users responsible for filing accuracy
+- **Compliance**: Data stored in Indian AWS regions, GDPR-equivalent privacy protection
 
 ### Non-Functional Requirements
 
@@ -161,3 +161,4 @@ graph LR
 
 
 **Bottom Line**: Citadel AI transforms the economics of consumer justice. Instead of choosing between ₹299 theft and ₹5,000 lawyer fees, Ramesh gets a court-ready legal draft in under **2 minutes** for <₹5. **This isn't legal tech—it's justice acceleration.**
+
