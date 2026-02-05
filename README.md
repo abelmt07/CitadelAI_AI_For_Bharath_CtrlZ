@@ -1,36 +1,50 @@
 # Citadel AI: Your First-Strike Legal Draft
-## AI for Bharat Hackathon Project
+### First-Strike Legal Draft Generator for Bharat
 
-**Voice to court-ready legal draft in 120 seconds for Hindi-speaking consumers**
+> **Transforming a Hindi voice complaint into a court-ready "Form I" in under 2 minutes.**
 
-### The Problem
-77% of Indians cannot access legal remedies. ₹299 unauthorized charges become economically irrational to pursue, given ₹5,000+ in lawyer fees.
+**The Problem**: 77% of Indians can't access legal remedies. A ₹299 fraud vs. a ₹5,000 lawyer fee = economic injustice.
 
-### Our Solution
-AI-powered legal companion that turns Hindi voice notes about consumer issues into court-ready "Form I" drafts in **under 120 seconds**.
+**The Solution**: Voice-first AI that generates fileable consumer complaints. No lawyer required.
+
+---
+
+## How It Works
+
+1. **Speak** — Hindi/English voice note
+2. **Analyze** — Claude 3 extracts legal strategy  
+3. **Validate** — Rule-based evidence checks
+4. **Draft** — Court-compliant Form I PDF
+
+**Target**: Sub-2-minute end-to-end journey.
+
+---
 
 ### Tech Stack (AWS Native)
-- **Amazon Transcribe** - Hindi speech-to-text
-- **Amazon Bedrock** - Claude 3 (legal reasoning) + Cohere Embed
-- **Amazon Q Business** - Workflow orchestration
-- **AWS Lambda + S3 + DynamoDB** - Serverless backend
+| Component | Service |
+|-----------|---------|
+| Voice → Text | Amazon Transcribe (hi-IN) |
+| Legal Analysis | Amazon Bedrock (Claude 3) |
+| Knowledge Retrieval | Cohere Embed |
+| Entity Extraction | AWS Lambda |
+| Orchestration | Amazon Q Business |
+| Storage | DynamoDB + S3 |
+| Security | IAM + KMS |
 
-### Key Features
-1. **Voice-First Intake** - Speak naturally, no typing needed
-2. **AI Strategy Adviser** - Identifies legal strategy automatically
-3. **Evidence Validator** - Rule-based checklist for case strength
-4. **Plain-Language Law Guide** - Consumer Protection Act explained simply
-5. **Instant Legal Draft** - Court-ready Form I in 120 seconds
+---
 
 ### Documentation
 - [Requirements & User Stories](requirements.md)
 - [System Design & Architecture](design.md)
 
+---
+
 ### Team CtrlZ
 - **Abel Mahesh Tharakan** - Product & Legal Lead
-- **Shaury Tandon** - AIML Engineering
+- **Shaury Tandon** - AI/ML Engineering
 - **Aditya Nair** - Cloud & Backend
 - **Abhinav Mankar** - Frontend & UX
 
 ---
-*Built for AI for Bharat Hackathon powered by AWS. Proof of concept - not for actual legal use.*
+*This repository contains documentation and design artifacts for the hackathon idea submission phase. Implementation to follow in subsequent rounds.*
+
