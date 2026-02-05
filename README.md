@@ -11,7 +11,7 @@
 
 ## How It Works
 
-1. **Speak** — Hindi/English voice note
+1. **Speak** — Native Indian language voice note
 2. **Analyze** — Claude 3 extracts legal strategy  
 3. **Validate** — Rule-based evidence checks
 4. **Draft** — Court-compliant Form I PDF
