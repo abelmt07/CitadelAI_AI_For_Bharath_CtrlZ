@@ -144,10 +144,10 @@ citadel-ai/
 
 | Name | Role | Responsibilities |
 |------|------|------------------|
-| Abel Mahesh Tharakan | Product & Legal Lead | Documentation, testing, demo video |
+| Abel Mahesh Tharakan | Product & Legal Lead | Documentation, Testing, Team Coordination |
 | Shaury Tandon | AI/ML Engineering | Claude Lambda, PDF generation |
 | Aditya Nair | Cloud & Backend | AWS infrastructure, Lambdas, API Gateway, Amplify |
-| Abhinav Mankar | Frontend & UX | HTML/Tailwind UI, Cursor, audio recording |
+| Abhinav Mankar | Frontend & UX | HTML/Tailwind UI, Cursor, Audio Recording |
 
 ---
 
