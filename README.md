@@ -15,6 +15,18 @@
 
 ---
 
+## Quick Start (For Judges)
+
+1. Click the **Working Prototype** link above
+2. Allow microphone access when prompted
+3. Tap the microphone and speak a Hindi complaint (e.g., "मुझसे हर महीने ₹299 कट रहा है")
+4. Wait 30-60 seconds for processing
+5. Download your Form I PDF
+
+**Total time:** Under 2 minutes
+
+---
+
 ## How It Works (Implemented Features)
 
 1. **Record** — User speaks a complaint in Hindi via real-time audio capture
@@ -65,24 +77,51 @@
 
 ---
 
+## Why AI is Required
+
+Legal complaints require understanding context, extracting entities (amounts, dates, parties), and applying complex legal reasoning—tasks that rule-based systems cannot handle. Claude 3 on Bedrock provides the necessary intelligence to transform raw voice complaints into structured legal documents with proper citations to the Consumer Protection Act 2019.
+
+---
+
 ## Repository Structure
 
+```
 citadel-ai/
 ├── frontend/
-│ ├── page1-record.html
-│ ├── page2-analysis.html
-│ └── page3-download.html
+│   ├── page1-record.html
+│   ├── page2-analysis.html
+│   ├── page3-download.html
+│   └── assets/
+│       ├── microphone-icon.svg
+│       └── logo.png
+│
 ├── lambdas/
-│ ├── transcribe-processor/
-│ ├── claude-analyzer/
-│ └── pdf-generator/
+│   ├── transcribe-processor/
+│   │   ├── lambda_function.py
+│   │   └── requirements.txt
+│   ├── claude-analyzer/
+│   │   ├── lambda_function.py
+│   │   └── requirements.txt
+│   └── pdf-generator/
+│       ├── lambda_function.py
+│       ├── requirements.txt
+│       └── templates/
+│           └── form_i_template.py
+│
 ├── docs/
-│ ├── architecture-diagram.png
-│ └── demo-script.md
+│   ├── architecture-diagram.png
+│   ├── demo-script.md
+│   ├── form-i-sample.pdf
+│   └── test-audio/
+│       ├── complaint-1.mp3
+│       ├── complaint-2.mp3
+│       └── complaint-3.mp3
+│
 ├── requirements.md
 ├── design.md
-└── README.md
-
+├── README.md
+└── .gitignore
+```
 
 ---
 
@@ -116,10 +155,10 @@ citadel-ai/
 
 **AWS AI for Bharat Hackathon**
 
-- Generative AI on AWS (Bedrock + Claude 3)
-- Kiro for spec-driven development
-- Serverless architecture (Lambda + S3 + API Gateway)
-- Voice-first, Hindi-native design
+- ✅ Generative AI on AWS (Bedrock + Claude 3)
+- ✅ **Kiro for spec-driven development** (used to generate requirements and design docs)
+- ✅ Serverless architecture (Lambda + S3 + API Gateway)
+- ✅ Voice-first, Hindi-native design
 
 ---
 
