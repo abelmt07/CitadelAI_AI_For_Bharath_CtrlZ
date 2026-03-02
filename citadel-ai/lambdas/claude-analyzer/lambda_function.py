@@ -3,7 +3,7 @@ import boto3
 import re
 
 # Connect to AWS Bedrock (this is how we talk to Claude 3)
-bedrock = boto3.client('bedrock-runtime', region_name='ap-south-1')
+bedrock = boto3.client('bedrock-runtime', region_name='us-east-1')
 
 def call_claude(transcription, attempt=1):
     """

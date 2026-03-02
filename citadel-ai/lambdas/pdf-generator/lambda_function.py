@@ -11,8 +11,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, 
 from reportlab.lib import colors
 
 # AWS clients
-s3 = boto3.client('s3', region_name='ap-south-1')
-BUCKET_NAME = os.environ.get('S3_BUCKET', 'citadel-ai-audio')
+s3 = boto3.client('s3', region_name='us-east-1')
+BUCKET_NAME = os.environ.get('S3_BUCKET', 'citadel-audio-ctrlz')
 
 
 def create_styles():
