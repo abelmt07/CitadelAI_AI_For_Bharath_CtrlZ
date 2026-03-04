@@ -606,6 +606,8 @@
     appState.analysisStatus = 'idle';
     appState.evidence = { hasSMSProof: false, hasBillingStmt: false };
     appState.pdfUrl = null;
+    var msgs = document.getElementById('messages');
+    if (msgs) while (msgs.children.length > 2) msgs.removeChild(msgs.lastChild);
     showScreen(1);
   }
 
@@ -665,6 +667,20 @@
   function nowTime() {
     var d = new Date();
     return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+
+  function appendComplaintChatBubbles() {
+    var msgs = document.getElementById('messages');
+    if (!msgs) return;
+    while (msgs.children.length > 2) msgs.removeChild(msgs.lastChild);
+    var t = nowTime();
+    var secs = typeof recSecs === 'number' ? recSecs : 5;
+    var issueText = (appState.analysis && (appState.analysis.issue || appState.analysis.issue_type)) || 'Unfair Trade Practice';
+    var sectionText = (appState.analysis && appState.analysis.section) ? 'Section ' + appState.analysis.section : 'Section 2(47)';
+    addMsg('<div class="flex flex-col items-end"><div class="bg-[#dcf8c6] px-3 py-2.5 rounded-2xl rounded-br-sm shadow-sm flex items-center gap-2 max-w-[240px]"><div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs cursor-pointer shrink-0">▶</div><div class="flex items-center gap-0.5 flex-1 h-5">' + waveBarHTML() + '</div><span class="text-[0.68rem] text-gray-500 shrink-0">0:' + String(secs).padStart(2, '0') + '</span></div><span class="text-[0.58rem] text-gray-400 mt-0.5 pr-1">' + t + ' ✓✓</span></div>', 'out');
+    addMsg('<div class="bg-white px-3 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px]"><div class="text-[0.6rem] uppercase tracking-wide text-brand-500 font-semibold mb-1">Transcribed</div><div class="font-hindi text-[0.8rem] text-gray-800 leading-relaxed mb-1.5">"' + (appState.transcription || '') + '"</div><div class="text-[0.7rem] text-gray-400 italic border-t border-gray-100 pt-1.5">' + (appState.transcriptionEnglish || 'Unauthorized charge of ₹299 monthly') + '</div></div><div class="text-[0.58rem] text-gray-400 mt-1 pl-8">' + t + '</div>');
+    addMsg('<div class="bg-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px] text-[0.82rem] text-gray-800 leading-relaxed">I\'ve identified an <strong>' + issueText + '</strong> violation under ' + sectionText + '. Tap below to see your full legal strategy.<span class="block text-[0.6rem] text-gray-400 text-right mt-1">' + t + '</span></div>');
+    msgs.scrollTop = msgs.scrollHeight;
   }
 
   function startWaveformViz(stream) {
@@ -868,7 +884,7 @@
         showUploadBar('✓ Analysis complete', true);
         hideUploadBar();
 
-        // Show results cards only once analysis is received
+        appendComplaintChatBubbles();
         if (appState.currentScreen === 2) renderScreen2();
       })
       .catch(function(err) {
@@ -901,6 +917,7 @@
         amount: '299'
       };
       appState.analysisStatus = 'ready';
+      appendComplaintChatBubbles();
       if (appState.currentScreen === 2) renderScreen2();
     }, 1600);
   }
