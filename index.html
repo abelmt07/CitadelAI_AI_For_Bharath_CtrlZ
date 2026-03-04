@@ -778,13 +778,22 @@
   function pollUntilTranscript(jobName) {
     return new Promise(function(resolve, reject) {
       function poll() {
-        apiTranscribePoll(jobName).then(function(data) {
-          if (data.status === 'COMPLETED') {
-            resolve(data.transcript || '');
+        apiTranscribePoll(jobName).then(function(pollData) {
+          var bodyData = {};
+          try {
+            bodyData = typeof pollData.body === 'string' ? JSON.parse(pollData.body) : (pollData.body || pollData);
+          } catch (e) {
+            bodyData = pollData;
+          }
+          var status = bodyData.status || pollData.status;
+          var transcript = bodyData.transcript;
+          if (transcript !== undefined) transcript = typeof transcript === 'string' ? transcript.trim() : String(transcript || '').trim();
+          if (status === 'COMPLETED' || (pollData.statusCode === 200 && transcript)) {
+            resolve(transcript || '');
             return;
           }
-          if (data.status === 'FAILED') {
-            reject(new Error(data.error || 'Transcription failed'));
+          if (status === 'FAILED') {
+            reject(new Error(bodyData.error || pollData.error || 'Transcription failed'));
             return;
           }
           setTimeout(poll, 2000);
@@ -864,7 +873,9 @@
         return pollUntilTranscript(jobName);
       })
       .then(function(transcript) {
-        appState.transcription = transcript;
+        var t = typeof transcript === 'string' ? transcript.trim() : '';
+        if (!t) return Promise.reject(new Error('Empty transcript'));
+        appState.transcription = t;
         appState.analysis = null;
         appState.analysisStatus = 'loading';
 
@@ -872,7 +883,7 @@
         showScreen(2);
 
         showUploadBar('✓ Transcribed — analyzing with AI...', true);
-        return apiAnalyze(transcript);
+        return apiAnalyze(t);
       })
       .then(function(analyzeResp) {
         appState.analysisStatus = 'ready';
