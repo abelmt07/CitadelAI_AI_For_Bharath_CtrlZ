@@ -786,7 +786,7 @@
             bodyData = pollData;
           }
           var status = bodyData.status || pollData.status;
-          var transcript = bodyData.transcript;
+          var transcript = bodyData.transcription != null ? bodyData.transcription : (bodyData.transcript != null ? bodyData.transcript : bodyData.text);
           if (transcript !== undefined) transcript = typeof transcript === 'string' ? transcript.trim() : String(transcript || '').trim();
           if (status === 'COMPLETED' || (pollData.statusCode === 200 && transcript)) {
             resolve(transcript || '');
@@ -889,6 +889,7 @@
         appState.analysisStatus = 'ready';
         setStateFromAnalysis(analyzeResp);
         if (!appState.transcriptionEnglish) appState.transcriptionEnglish = 'Unauthorized charge of ₹299 monthly';
+        try { localStorage.setItem('citadel_analysis', JSON.stringify(analyzeResp)); } catch (e) {}
 
         clearInterval(iv);
         document.getElementById('uploadFill').style.width = '100%';
