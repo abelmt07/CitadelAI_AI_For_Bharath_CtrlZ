@@ -462,10 +462,8 @@
 
   function generatePdfPreview() {
     if (window.generatedPdfUrl) {
-      var iframe = document.getElementById('pdf-preview');
-      var container = document.getElementById('pdf-preview-container');
-      if (iframe) iframe.src = window.generatedPdfUrl;
-      if (container) container.classList.remove('hidden');
+      document.getElementById('pdf-preview').src = window.generatedPdfUrl;
+      document.getElementById('pdf-preview-container').classList.remove('hidden');
       return;
     }
     if (window._pdfPreviewGenerating) return;
