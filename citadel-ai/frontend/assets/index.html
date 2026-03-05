@@ -194,6 +194,11 @@
       </div>
     </div>
 
+    <div id="analysis-loading" class="hidden text-center mt-4">
+      <i class="fas fa-spinner fa-spin text-green-700 text-2xl"></i>
+      <p class="text-sm mt-2">Analyzing your complaint...</p>
+    </div>
+
     <div id="results" class="hidden flex-col gap-3.5">
       <div class="bg-white border border-[#b2d8a0] rounded-2xl p-4 shadow-sm slide-up">
         <div class="flex items-center gap-2 mb-2.5">
@@ -883,9 +888,13 @@
         showScreen(2);
 
         showUploadBar('✓ Transcribed — analyzing with AI...', true);
+        var loadingEl = document.getElementById('analysis-loading');
+        if (loadingEl) loadingEl.classList.remove('hidden');
         return apiAnalyze(t);
       })
       .then(function(analyzeResp) {
+        var loadingEl = document.getElementById('analysis-loading');
+        if (loadingEl) loadingEl.classList.add('hidden');
         appState.analysisStatus = 'ready';
         setStateFromAnalysis(analyzeResp);
         if (!appState.transcriptionEnglish) appState.transcriptionEnglish = 'Unauthorized charge of ₹299 monthly';
@@ -903,6 +912,8 @@
         if (appState.currentScreen === 2) renderScreen2();
       })
       .catch(function(err) {
+        var loadingEl = document.getElementById('analysis-loading');
+        if (loadingEl) loadingEl.classList.add('hidden');
         clearInterval(iv);
         console.warn('API flow failed, using demo:', err);
         showUploadBar('✓ Using demo data', true);
