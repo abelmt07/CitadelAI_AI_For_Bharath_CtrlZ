@@ -33,19 +33,17 @@ Return JSON with exactly these fields:
 
     # Send the prompt to Claude 3 on Bedrock
     response = bedrock.invoke_model(
-        modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+        modelId='amazon.nova-lite-v1:0',
         body=json.dumps({
-            "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 500,
             "messages": [
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": [{"text": prompt}]}
             ]
         })
     )
     
     # Extract the text from Claude's response
     response_body = json.loads(response['body'].read())
-    claude_text = response_body['content'][0]['text']
+    claude_text = response_body['output']['message']['content'][0]['text']
     
     return claude_text
 
