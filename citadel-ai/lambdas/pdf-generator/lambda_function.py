@@ -19,56 +19,62 @@ def create_styles():
     """Define all text styles for the court document"""
     styles = getSampleStyleSheet()
 
-    styles.add(ParagraphStyle(
-        name='CourtHeader',
-        fontSize=12,
-        fontName='Helvetica-Bold',
-        alignment=TA_CENTER,
-        spaceAfter=6,
-        leading=16
-    ))
-    styles.add(ParagraphStyle(
-        name='SectionHeading',
-        fontSize=11,
-        fontName='Helvetica-Bold',
-        alignment=TA_LEFT,
-        spaceBefore=14,
-        spaceAfter=6
-    ))
-    styles.add(ParagraphStyle(
-        name='BodyText',
-        fontSize=10,
-        fontName='Helvetica',
-        alignment=TA_JUSTIFY,
-        spaceBefore=4,
-        spaceAfter=4,
-        leading=15
-    ))
-    styles.add(ParagraphStyle(
-        name='CenterText',
-        fontSize=10,
-        fontName='Helvetica',
-        alignment=TA_CENTER,
-        spaceBefore=4,
-        spaceAfter=4
-    ))
-    styles.add(ParagraphStyle(
-        name='BoldCenter',
-        fontSize=11,
-        fontName='Helvetica-Bold',
-        alignment=TA_CENTER,
-        spaceBefore=6,
-        spaceAfter=6
-    ))
-    styles.add(ParagraphStyle(
-        name='SmallText',
-        fontSize=9,
-        fontName='Helvetica',
-        alignment=TA_LEFT,
-        spaceBefore=2,
-        spaceAfter=2,
-        leading=13
-    ))
+    if 'CourtHeader' not in styles:
+        styles.add(ParagraphStyle(
+            name='CourtHeader',
+            fontSize=12,
+            fontName='Helvetica-Bold',
+            alignment=TA_CENTER,
+            spaceAfter=6,
+            leading=16
+        ))
+    if 'SectionHeading' not in styles:
+        styles.add(ParagraphStyle(
+            name='SectionHeading',
+            fontSize=11,
+            fontName='Helvetica-Bold',
+            alignment=TA_LEFT,
+            spaceBefore=14,
+            spaceAfter=6
+        ))
+    if 'BodyText' not in styles:
+        styles.add(ParagraphStyle(
+            name='BodyText',
+            fontSize=10,
+            fontName='Helvetica',
+            alignment=TA_JUSTIFY,
+            spaceBefore=4,
+            spaceAfter=4,
+            leading=15
+        ))
+    if 'CenterText' not in styles:
+        styles.add(ParagraphStyle(
+            name='CenterText',
+            fontSize=10,
+            fontName='Helvetica',
+            alignment=TA_CENTER,
+            spaceBefore=4,
+            spaceAfter=4
+        ))
+    if 'BoldCenter' not in styles:
+        styles.add(ParagraphStyle(
+            name='BoldCenter',
+            fontSize=11,
+            fontName='Helvetica-Bold',
+            alignment=TA_CENTER,
+            spaceBefore=6,
+            spaceAfter=6
+        ))
+    if 'SmallText' not in styles:
+        styles.add(ParagraphStyle(
+            name='SmallText',
+            fontSize=9,
+            fontName='Helvetica',
+            alignment=TA_LEFT,
+            spaceBefore=2,
+            spaceAfter=2,
+            leading=13
+        ))
 
     return styles
 
