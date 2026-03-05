@@ -889,7 +889,10 @@
         appState.analysisStatus = 'ready';
         setStateFromAnalysis(analyzeResp);
         if (!appState.transcriptionEnglish) appState.transcriptionEnglish = 'Unauthorized charge of ₹299 monthly';
-        try { localStorage.setItem('citadel_analysis', JSON.stringify(analyzeResp)); } catch (e) {}
+        try {
+          localStorage.setItem('citadel_transcription', analyzeResp.transcription != null ? analyzeResp.transcription : '');
+          localStorage.setItem('citadel_analysis', JSON.stringify(analyzeResp.legal_analysis != null ? analyzeResp.legal_analysis : {}));
+        } catch (e) {}
 
         clearInterval(iv);
         document.getElementById('uploadFill').style.width = '100%';
