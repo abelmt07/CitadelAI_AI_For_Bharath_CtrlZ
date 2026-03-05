@@ -74,6 +74,9 @@ def lambda_handler(event, context):
     if not transcription:
         return {
             "statusCode": 400,
+            "headers": {
+                "Access-Control-Allow-Origin": "*"
+            },
             "body": json.dumps({"error": "No transcription provided"})
         }
     
@@ -92,6 +95,11 @@ def lambda_handler(event, context):
             # Return the structured data
             return {
                 "statusCode": 200,
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST"
+                },
                 "body": json.dumps({
                     "transcription": transcription,
                     "legal_analysis": legal_analysis
@@ -104,6 +112,9 @@ def lambda_handler(event, context):
                 # All 3 attempts failed
                 return {
                     "statusCode": 500,
+                    "headers": {
+                        "Access-Control-Allow-Origin": "*"
+                    },
                     "body": json.dumps({
                         "error": "Failed to analyze complaint after 3 attempts",
                         "details": str(e)
