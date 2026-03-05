@@ -553,7 +553,7 @@
       if (t != null) transcription = t;
     } catch (e) {}
 
-    fetch(API_BASE + '/generate-pdf', {
+    fetch(`${API_BASE}/generate-pdf`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -753,7 +753,7 @@
   }
 
   function apiPresign() {
-    return fetch(API_BASE + '/get-upload-url', {
+    return fetch(`${API_BASE}/get-upload-url`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -769,7 +769,7 @@
   }
 
   function apiTranscribeStart(s3Key) {
-    return fetch(API_BASE + '/transcribe', {
+    return fetch(`${API_BASE}/transcribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ s3_key: s3Key, bucket: BUCKET })
@@ -780,7 +780,7 @@
   }
 
   function apiTranscribePoll(jobName) {
-    return fetch(API_BASE + '/transcribe?job_name=' + encodeURIComponent(jobName))
+    return fetch(`${API_BASE}/transcribe?job_name=${encodeURIComponent(jobName)}`)
       .then(function(r) { return r.json(); });
   }
 
@@ -813,7 +813,7 @@
   }
 
   function apiAnalyze(transcript) {
-    return fetch(API_BASE + '/analyze', {
+    return fetch(`${API_BASE}/analyze`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ transcription: transcript })
@@ -824,7 +824,7 @@
   }
 
   function apiPdf(caseData) {
-    return fetch(API_BASE + '/generate-pdf', {
+    return fetch(`${API_BASE}/generate-pdf`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ case_data: caseData })
