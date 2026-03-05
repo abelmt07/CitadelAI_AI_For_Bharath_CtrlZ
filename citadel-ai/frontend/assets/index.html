@@ -308,37 +308,8 @@
     <div class="ml-auto bg-forest-50 border border-forest-200 text-forest-500 text-[0.62rem] px-2.5 py-0.5 rounded-xl font-semibold">✓ Ready</div>
   </div>
   <div class="flex-1 overflow-y-auto no-scrollbar px-3.5 py-3.5 flex flex-col gap-3.5">
-    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md slide-up">
-      <div class="bg-forest-500 px-4 py-2.5 flex items-center justify-between">
-        <div><div class="text-white font-bold text-[0.82rem]">Consumer Protection Act, 2019</div><div class="text-white/70 text-[0.65rem] mt-0.5">District Consumer Forum, Lucknow</div></div>
-        <span class="text-white/80 text-lg">📄</span>
-      </div>
-      <div class="px-4 py-3.5">
-        <div class="text-center border-b-2 border-forest-500 pb-2.5 mb-3">
-          <h3 class="font-serif text-forest-500 tracking-[3px] text-[1rem]">FORM I</h3>
-          <p class="text-gray-400 text-[0.62rem] mt-0.5">Consumer Complaint · Ready to File</p>
-        </div>
-        <div class="mb-3">
-          <div class="text-[0.6rem] uppercase tracking-wide text-forest-500 font-bold border-b border-gray-100 pb-1 mb-2">1. Complainant Details</div>
-          <div class="flex gap-2 mb-1 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Name:</span><span class="text-gray-800 font-medium">Ramesh Kumar</span></div>
-          <div class="flex gap-2 mb-1 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Address:</span><span class="text-gray-800 font-medium">Shop No. 14, Hazratganj, Lucknow</span></div>
-          <div class="flex gap-2 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Contact:</span><span class="text-gray-800 font-medium">+91 9XXXXXXX</span></div>
-        </div>
-        <div class="mb-3">
-          <div class="text-[0.6rem] uppercase tracking-wide text-forest-500 font-bold border-b border-gray-100 pb-1 mb-2">2. Opposite Party</div>
-          <div class="flex gap-2 mb-1 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Name:</span><span class="text-gray-800 font-medium" id="fieldParty">Airtel India Ltd.</span></div>
-          <div class="flex gap-2 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Type:</span><span class="text-gray-800 font-medium">Telecom Service Provider</span></div>
-        </div>
-        <div class="mb-3">
-          <div class="text-[0.6rem] uppercase tracking-wide text-forest-500 font-bold border-b border-gray-100 pb-1 mb-2">3. Complaint Facts</div>
-          <div class="border-l-[3px] border-forest-500 pl-3 pr-2 py-2 bg-forest-50 rounded-r-lg text-[0.73rem] text-gray-700 leading-relaxed">Unauthorized recurring charge of ₹299/month for Value-Added Service without consent. Violation of Consumer Protection Act, 2019.</div>
-        </div>
-        <div>
-          <div class="text-[0.6rem] uppercase tracking-wide text-forest-500 font-bold border-b border-gray-100 pb-1 mb-2">4. Legal Grounds</div>
-          <div class="flex gap-2 mb-1 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Section:</span><span class="text-gray-800 font-medium">2(47) — Unfair Trade Practice</span></div>
-          <div class="flex gap-2 text-[0.75rem]"><span class="text-gray-400 w-16 shrink-0">Relief:</span><span class="text-forest-500 font-bold text-[1rem]" id="fieldRelief">₹299 + Compensation</span></div>
-        </div>
-      </div>
+    <div id="pdf-preview-container" class="hidden">
+      <iframe id="pdf-preview" class="w-full h-[420px] rounded-lg border" title="Form I PDF"></iframe>
     </div>
     <button type="button" onclick="downloadPDF()" class="w-full py-4 bg-[#0B6623] text-white font-bold text-[0.95rem] rounded-xl hover:bg-forest-600 active:scale-95 transition-all duration-150 flex items-center justify-center gap-2 shadow-md slide-up-2">⬇️ Download PDF</button>
     <button type="button" onclick="sharePDF()" class="w-full py-3.5 bg-white border border-gray-200 text-gray-700 font-medium text-[0.9rem] rounded-xl hover:border-forest-500 hover:text-forest-500 transition-all duration-150 flex items-center justify-center gap-2 slide-up-3">📤 Share Document</button>
@@ -565,6 +536,10 @@
       .then(function(r) { return r.json(); })
       .then(function(res) {
         if (res && res.pdf_url) {
+          var iframe = document.getElementById('pdf-preview');
+          var container = document.getElementById('pdf-preview-container');
+          if (iframe) iframe.src = res.pdf_url;
+          if (container) container.classList.remove('hidden');
           window.open(res.pdf_url, '_blank');
           var t = document.getElementById('toast');
           if (t) {
