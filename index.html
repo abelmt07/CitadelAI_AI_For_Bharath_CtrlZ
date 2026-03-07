@@ -188,7 +188,7 @@
         <!-- Removed "Claude AI is reviewing your case" line -->
       </div>
       <div class="flex flex-col gap-2 mt-1 text-left">
-        <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Transcribing Hindi audio...</div>
+      <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Detecting language and transcribing audio...</div>
         <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Identifying legal violations...</div>
         <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Building legal strategy...</div>
       </div>
@@ -485,7 +485,7 @@
 
   function renderScreen2() {
     var t = document.getElementById('transcriptionDisplay');
-    if (t) t.textContent = appState.transcription || '₹299 का अनधिकृत शुल्क हर महीने काटा जा रहा है';
+    if (t) t.textContent = appState.transcription || '';
 
     var loading = document.getElementById('loadingWrap');
     var results = document.getElementById('results');
