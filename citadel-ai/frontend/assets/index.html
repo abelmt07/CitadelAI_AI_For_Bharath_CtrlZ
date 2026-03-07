@@ -584,7 +584,47 @@
 
   function goToDocument() {
     captureEvidenceFromScreen2();
-    showScreen(3);
+    document.body.insertAdjacentHTML('beforeend',
+      '<div id="pdfLoadingOverlay" class="fixed inset-0 bg-white/90 flex flex-col items-center justify-center z-50 gap-4">' +
+        '<div class="w-12 h-12 rounded-full border-[3px] border-[#b2d8a0] border-t-[#0B6623] spinner"></div>' +
+        '<p class="text-[#1a3a1a] font-semibold text-[1rem]">Generating your legal document...</p>' +
+        '<p class="text-[#5a8a5a] text-sm">This will only take a moment</p>' +
+      '</div>'
+    );
+
+    var analysis = appState.analysis || {};
+    var ev = appState.evidence || {};
+    var caseData = {
+      complainant_name: 'Complainant',
+      father_name: 'Shri [Father Name]',
+      age: '[Age]',
+      complainant_address: 'Lucknow, Uttar Pradesh',
+      opposite_party: analysis.opposite_party || analysis.company_name || analysis.party || 'Unknown Company',
+      op_address: 'Corporate Office, New Delhi - 110001',
+      amount: parseInt(analysis.amount, 10) || 0,
+      section: analysis.section || analysis.legal_section || '2(47)',
+      issue_type: analysis.issue_type || 'other',
+      relief_sought: analysis.relief_sought || analysis.relief || 'refund',
+      has_sms_proof: !!ev['Do you have the SMS showing the deduction?'],
+      has_billing_statement: !!ev['Do you have a bank statement or bill?']
+    };
+
+    apiPdf(caseData)
+      .then(function(res) {
+        if (res && res.pdf_url) {
+          window.generatedPdfUrl = res.pdf_url;
+          var overlay = document.getElementById('pdfLoadingOverlay');
+          if (overlay) overlay.remove();
+          showScreen(3);
+        } else {
+          throw new Error('No PDF URL');
+        }
+      })
+      .catch(function() {
+        var overlay = document.getElementById('pdfLoadingOverlay');
+        if (overlay) overlay.remove();
+        alert('PDF generation failed, please try again');
+      });
   }
   window.goToDocument = goToDocument;
 
