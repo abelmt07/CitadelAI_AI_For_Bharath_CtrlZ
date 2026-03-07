@@ -163,7 +163,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- SCREEN 2: AI Analysis -->
+<!-- SCREEN 2: AI Analysis (Dynamic) -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="screen2" class="citadel-screen hidden w-[360px] min-h-[680px] bg-[#e8f5e1] rounded-[36px] shadow-2xl overflow-hidden flex-col">
 
@@ -185,7 +185,7 @@
       <div class="w-12 h-12 rounded-full border-[3px] border-[#b2d8a0] border-t-[#0B6623] spinner"></div>
       <div>
         <h3 class="text-[#1a3a1a] font-semibold text-[1rem]">Analyzing complaint...</h3>
-        <p class="text-[#5a8a5a] text-[0.82rem] mt-1">Claude AI is reviewing your case</p>
+        <!-- Removed "Claude AI is reviewing your case" line -->
       </div>
       <div class="flex flex-col gap-2 mt-1 text-left">
         <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Transcribing Hindi audio...</div>
@@ -200,20 +200,22 @@
     </div>
 
     <div id="results" class="hidden flex-col gap-3.5">
+      <!-- Your Complaint Card (Removed English translation) -->
       <div class="bg-white border border-[#b2d8a0] rounded-2xl p-4 shadow-sm slide-up">
         <div class="flex items-center gap-2 mb-2.5">
           <div class="w-7 h-7 rounded-full bg-[#e2f4d8] border border-[#b2d8a0] flex items-center justify-center text-sm">🎙️</div>
           <span class="text-[0.7rem] font-semibold text-[#5a8a5a] uppercase tracking-wide">Your Complaint</span>
         </div>
         <p id="transcriptionDisplay" class="font-hindi text-[0.82rem] text-[#1a3a1a] leading-relaxed bg-[#f0faf0] rounded-xl px-3 py-2.5 border border-[#b2d8a0]">₹299 का अनधिकृत शुल्क हर महीने काटा जा रहा है</p>
-        <p class="text-[0.68rem] text-[#5a8a5a] italic mt-1.5 px-1" id="transcriptionEnglish">Unauthorized charge of ₹299 monthly</p>
+        <!-- Removed the English translation line -->
       </div>
 
+      <!-- Issue Identified Card (Removed company and amount lines) -->
       <div class="bg-white border-2 border-[#0B6623] rounded-2xl p-4 shadow-sm slide-up-2">
         <div class="flex items-center gap-2 mb-3">
           <div class="w-7 h-7 rounded-full bg-[#e2f4d8] border border-[#b2d8a0] flex items-center justify-center text-sm">✓</div>
           <span class="text-[0.7rem] font-semibold text-[#1a3a1a] uppercase tracking-wide">Issue Identified</span>
-          <span class="ml-auto bg-[#e2f4d8] border border-[#b2d8a0] text-[#0B6623] text-[0.62rem] px-2.5 py-0.5 rounded-full font-semibold">High Confidence</span>
+          <span class="ml-auto bg-[#e2f4d8] border border-[#b2d8a0] text-[#0B6623] text-[0.62rem] px-2.5 py-0.5 rounded-full font-semibold" id="confidenceChip">High Confidence</span>
         </div>
         <div class="inline-block bg-[#e2f4d8] border border-[#b2d8a0] text-[#0B6623] px-3.5 py-1.5 rounded-full text-[0.82rem] font-semibold mb-3" id="issueType">Unfair Trade Practice</div>
         <div class="flex flex-col gap-1.5 mb-3">
@@ -221,14 +223,16 @@
             <span class="text-[#0B6623] mt-0.5">●</span>
             <span class="text-[#5a8a5a]"><strong class="text-[#1a3a1a]" id="sectionRef">Section 2(47)</strong> – Consumer Protection Act, 2019</span>
           </div>
-          <div class="flex items-start gap-2 text-[0.75rem]">
+          <!-- Removed company and amount lines -->
+          <!-- Key Dates (optional) -->
+          <div class="flex items-start gap-2 text-[0.75rem] hidden" id="keyDatesRow">
             <span class="text-[#0B6623] mt-0.5">●</span>
-            <span class="text-[#5a8a5a]">Recurring unauthorized charges detected</span>
+            <span class="text-[#5a8a5a]"><strong class="text-[#1a3a1a]">Key date:</strong> <span id="keyDatesDisplay"></span></span>
           </div>
         </div>
         <div class="bg-[#f0faf0] border border-[#b2d8a0] rounded-xl px-3 py-2.5 mb-3">
           <div class="text-[0.68rem] text-[#0B6623] font-semibold mb-1">Applicable Sections</div>
-          <div class="text-[0.72rem] text-[#5a8a5a] leading-relaxed">
+          <div class="text-[0.72rem] text-[#5a8a5a] leading-relaxed" id="applicableSectionsStatic">
             Section 35 — Filing at District Consumer Forum<br/>
             Section 42 — Compensation for deficiency of service
           </div>
@@ -254,27 +258,14 @@
         </div>
       </div>
 
+      <!-- Evidence Checklist Card (Dynamic) -->
       <div class="bg-white border border-[#b2d8a0] rounded-2xl p-4 shadow-sm slide-up-3">
         <div class="flex items-center gap-2 mb-3">
           <div class="w-7 h-7 rounded-full bg-[#e2f4d8] border border-[#b2d8a0] flex items-center justify-center text-sm">📎</div>
           <span class="text-[0.7rem] font-semibold text-[#1a3a1a] uppercase tracking-wide">Evidence Checklist</span>
         </div>
-        <label class="flex items-center gap-3 p-3 bg-[#f0faf0] border border-[#b2d8a0] rounded-xl mb-2.5 cursor-pointer group hover:border-[#0B6623] transition-colors">
-          <input type="checkbox" id="hasSMS" class="hidden" onchange="updateCheckbox(this, 'checkboxSMS')"/>
-          <div id="checkboxSMS" class="w-6 h-6 rounded-md border-2 border-[#b2d8a0] bg-white flex items-center justify-center shrink-0 transition-all duration-150 group-hover:border-[#0B6623]"></div>
-          <div>
-            <div class="text-[#1a3a1a] text-[0.82rem] font-medium">I have SMS proof</div>
-            <div class="text-[#5a8a5a] text-[0.68rem]">Deduction notice from Airtel</div>
-          </div>
-        </label>
-        <label class="flex items-center gap-3 p-3 bg-[#f0faf0] border border-[#b2d8a0] rounded-xl cursor-pointer group hover:border-[#0B6623] transition-colors">
-          <input type="checkbox" id="hasBilling" class="hidden" onchange="updateCheckbox(this, 'checkboxBilling')"/>
-          <div id="checkboxBilling" class="w-6 h-6 rounded-md border-2 border-[#b2d8a0] bg-white flex items-center justify-center shrink-0 transition-all duration-150 group-hover:border-[#0B6623]"></div>
-          <div>
-            <div class="text-[#1a3a1a] text-[0.82rem] font-medium">I have billing statement</div>
-            <div class="text-[#5a8a5a] text-[0.68rem]">Monthly bill or account summary</div>
-          </div>
-        </label>
+        <!-- Dynamic questions injected here -->
+        <div id="evidenceQuestionsContainer" class="flex flex-col gap-2.5"></div>
         <div class="mt-3.5">
           <div class="flex justify-between text-[0.72rem] text-[#5a8a5a] mb-1.5">
             <span>Case Strength</span>
@@ -343,12 +334,46 @@
     transcriptionEnglish: '',
     analysis: null,
     analysisStatus: 'idle', // idle | loading | ready | error
-    evidence: { hasSMSProof: false, hasBillingStmt: false },
+    evidence: { }, // will store answers to dynamic questions (key: question text, value: boolean)
     pdfUrl: null,
     currentScreen: 1
   };
 
   window.appState = appState;
+
+  // Dynamic evidence questions based on issue type (from generalization action plan)
+  const evidenceQuestions = {
+    unauthorized_charge: [
+      "Do you have the SMS showing the deduction?",
+      "Do you have a bank statement or bill?",
+      "Do you have the date when this started?"
+    ],
+    defective_product: [
+      "Do you have photos/videos of the defect?",
+      "Do you have the purchase receipt?",
+      "Do you have warranty card (if applicable)?"
+    ],
+    service_delay: [
+      "Do you have order confirmation?",
+      "Do you have screenshot of delivery time?",
+      "Do you have communication with customer support?"
+    ],
+    refund_not_processed: [
+      "Do you have payment receipt?",
+      "Do you have order screenshot?",
+      "Do you have any email/call records with support?"
+    ],
+    misleading_advertisement: [
+      "Do you have screenshot of the advertisement?",
+      "Do you have proof of purchase?",
+      "Do you have any written communication?"
+    ],
+    default: [
+      "Do you have any proof of transaction?",
+      "Do you have any communication with the company?",
+      "Do you have relevant dates?"
+    ]
+  };
 
   function setBodyBg(bgClass) {
     document.body.classList.remove('bg-gray-100', 'bg-[#c8e6b8]');
@@ -356,9 +381,7 @@
   }
 
   function showScreen(n) {
-    // Same outer page background for all screens (gray, not green)
     setBodyBg('bg-gray-100');
-
     appState.currentScreen = n;
 
     document.querySelectorAll('.citadel-screen').forEach(function(el) {
@@ -371,7 +394,6 @@
       screen.classList.add('flex');
     }
     if (n === 1) {
-      // When returning to Screen 1, show "Analyze My Complaint" if analysis is ready
       var nextBtn = document.getElementById('nextBtn');
       if (nextBtn) {
         if (appState.analysisStatus === 'ready') {
@@ -390,17 +412,85 @@
     }
   }
 
+  function renderEvidenceQuestions(issueType) {
+    const container = document.getElementById('evidenceQuestionsContainer');
+    if (!container) return;
+    // Get questions based on issueType, fallback to default
+    const questions = evidenceQuestions[issueType] || evidenceQuestions.default;
+    // Clear container
+    container.innerHTML = '';
+    // Create a checkbox for each question
+    questions.forEach((q, index) => {
+      const id = `ev_${index}`;
+      const boxId = `cb_${index}`;
+      const label = document.createElement('label');
+      label.className = 'flex items-center gap-3 p-3 bg-[#f0faf0] border border-[#b2d8a0] rounded-xl cursor-pointer group hover:border-[#0B6623] transition-colors';
+      label.innerHTML = `
+        <input type="checkbox" id="${id}" class="hidden" onchange="window.updateDynamicCheckbox(this, '${boxId}', '${q}')"/>
+        <div id="${boxId}" class="w-6 h-6 rounded-md border-2 border-[#b2d8a0] bg-white flex items-center justify-center shrink-0 transition-all duration-150 group-hover:border-[#0B6623]"></div>
+        <div>
+          <div class="text-[#1a3a1a] text-[0.82rem] font-medium">${q}</div>
+        </div>
+      `;
+      container.appendChild(label);
+      // Pre-populate from appState.evidence if exists
+      if (appState.evidence && appState.evidence[q]) {
+        const checkbox = document.getElementById(id);
+        if (checkbox) {
+          checkbox.checked = true;
+          const boxDiv = document.getElementById(boxId);
+          if (boxDiv) {
+            boxDiv.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
+            boxDiv.classList.remove('border-[#b2d8a0]', 'bg-white');
+            boxDiv.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
+          }
+        }
+      }
+    });
+    updateStrength();
+  }
+
+  // Global function to handle dynamic checkbox changes
+  window.updateDynamicCheckbox = function(input, boxId, questionText) {
+    const box = document.getElementById(boxId);
+    if (input.checked) {
+      box.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
+      box.classList.remove('border-[#b2d8a0]', 'bg-white');
+      box.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
+      appState.evidence[questionText] = true;
+    } else {
+      box.classList.remove('bg-[#0B6623]', 'border-[#0B6623]');
+      box.classList.add('border-[#b2d8a0]', 'bg-white');
+      box.innerHTML = '';
+      appState.evidence[questionText] = false;
+    }
+    updateStrength();
+  };
+
+  function updateStrength() {
+    const container = document.getElementById('evidenceQuestionsContainer');
+    if (!container) return;
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    let checkedCount = 0;
+    checkboxes.forEach(cb => { if (cb.checked) checkedCount++; });
+    const total = checkboxes.length || 1; // avoid division by zero
+    // Simple strength: base 50% + 10% per checked item, max 90%
+    let pct = 50 + (checkedCount / total) * 40;
+    pct = Math.min(90, Math.max(50, Math.round(pct)));
+    const pctEl = document.getElementById('pct');
+    const fillEl = document.getElementById('fill');
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+  }
+
   function renderScreen2() {
     var t = document.getElementById('transcriptionDisplay');
-    var e = document.getElementById('transcriptionEnglish');
     if (t) t.textContent = appState.transcription || '₹299 का अनधिकृत शुल्क हर महीने काटा जा रहा है';
-    if (e) e.textContent = appState.transcriptionEnglish || 'Unauthorized charge of ₹299 monthly';
 
     var loading = document.getElementById('loadingWrap');
     var results = document.getElementById('results');
     var chip = document.getElementById('completeChip');
 
-    // Restore Screen 2 loading: show loader until analysis response is received
     if (appState.analysisStatus !== 'ready') {
       if (loading) loading.style.display = '';
       if (results) { results.classList.add('hidden'); results.classList.remove('flex'); }
@@ -410,52 +500,34 @@
 
     var a = appState.analysis;
     if (a) {
-      var issueEl = document.getElementById('issueType');
-      var sectionEl = document.getElementById('sectionRef');
-      if (issueEl) issueEl.textContent = a.issue || a.issue_type || 'Unfair Trade Practice';
-      if (sectionEl) sectionEl.textContent = 'Section ' + (a.section || '2(47)');
+      // Populate dynamic fields
+      document.getElementById('issueType').textContent = a.issue_type ? a.issue_type.replace(/_/g, ' ') : (a.issue || 'Unfair Trade Practice');
+      document.getElementById('sectionRef').textContent = a.legal_section ? 'Section ' + a.legal_section : (a.section ? 'Section ' + a.section : 'Section 2(47)');
+      const confidenceChip = document.getElementById('confidenceChip');
+      if (confidenceChip) {
+        confidenceChip.textContent = a.confidence ? a.confidence.charAt(0).toUpperCase() + a.confidence.slice(1) + ' Confidence' : 'High Confidence';
+      }
+      if (a.key_dates) {
+        document.getElementById('keyDatesDisplay').textContent = a.key_dates;
+        document.getElementById('keyDatesRow').classList.remove('hidden');
+      } else {
+        document.getElementById('keyDatesRow').classList.add('hidden');
+      }
+
+      // Render dynamic evidence questions based on issue_type
+      renderEvidenceQuestions(a.issue_type || 'default');
     }
+
     if (loading) loading.style.display = 'none';
     if (results) { results.classList.remove('hidden'); results.classList.add('flex'); }
     if (chip) chip.classList.remove('hidden');
-    // Restore evidence checkboxes from appState (preserves state when returning from Screen 3)
-    var ev = appState.evidence || {};
-    var hasSMS = document.getElementById('hasSMS');
-    var hasBilling = document.getElementById('hasBilling');
-    var cbSMS = document.getElementById('checkboxSMS');
-    var cbBilling = document.getElementById('checkboxBilling');
-    if (hasSMS) hasSMS.checked = !!ev.hasSMSProof;
-    if (hasBilling) hasBilling.checked = !!ev.hasBillingStmt;
-    if (cbSMS) {
-      if (ev.hasSMSProof) {
-        cbSMS.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
-        cbSMS.classList.remove('border-[#b2d8a0]', 'bg-white');
-        cbSMS.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
-      } else {
-        cbSMS.classList.remove('bg-[#0B6623]', 'border-[#0B6623]');
-        cbSMS.classList.add('border-[#b2d8a0]', 'bg-white');
-        cbSMS.innerHTML = '';
-      }
-    }
-    if (cbBilling) {
-      if (ev.hasBillingStmt) {
-        cbBilling.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
-        cbBilling.classList.remove('border-[#b2d8a0]', 'bg-white');
-        cbBilling.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
-      } else {
-        cbBilling.classList.remove('bg-[#0B6623]', 'border-[#0B6623]');
-        cbBilling.classList.add('border-[#b2d8a0]', 'bg-white');
-        cbBilling.innerHTML = '';
-      }
-    }
-    updateStrength();
   }
 
   function renderScreen3() {
     var a = appState.analysis || {};
     var party = document.getElementById('fieldParty');
     var relief = document.getElementById('fieldRelief');
-    if (party) party.textContent = a.party || a.opposite_party || 'Airtel India Ltd.';
+    if (party) party.textContent = a.party || a.opposite_party || a.company_name || 'Airtel India Ltd.';
     if (relief) relief.textContent = a.relief || a.relief_sought || '₹299 + Compensation';
     generatePdfPreview();
   }
@@ -468,26 +540,20 @@
     }
     if (window._pdfPreviewGenerating) return;
     window._pdfPreviewGenerating = true;
-    var analysis = {};
-    var transcription = '';
-    try {
-      var stored = localStorage.getItem('citadel_analysis');
-      if (stored) analysis = JSON.parse(stored);
-      var t = localStorage.getItem('citadel_transcription');
-      if (t != null) transcription = t;
-    } catch (e) {}
+    var analysis = appState.analysis || {};
+    var transcription = appState.transcription || '';
     var ev = appState.evidence || {};
     var caseData = {
       complainant_name: 'Ramesh Kumar',
       father_name: 'Shri [Father Name]',
       age: '[Age]',
       complainant_address: 'Hazratganj, Lucknow',
-      opposite_party: analysis.opposite_party || analysis.party || 'Bharti Airtel Limited',
+      opposite_party: analysis.company_name || analysis.opposite_party || analysis.party || 'Bharti Airtel Limited',
       op_address: 'Corporate Office, New Delhi - 110001',
       amount: parseInt(analysis.amount, 10) || 299,
-      section: (analysis.section && String(analysis.section).replace(/[^0-9()]/g, '')) || '2(47)',
-      has_sms_proof: !!ev.hasSMSProof,
-      has_billing_statement: !!ev.hasBillingStmt
+      section: (analysis.legal_section || analysis.section || '2(47)').replace(/[^0-9()]/g, ''),
+      has_sms_proof: !!ev['Do you have the SMS showing the deduction?'],
+      has_billing_statement: !!ev['Do you have a bank statement or bill?'] // simplistic, will be improved
     };
     apiPdf(caseData)
       .then(function(res) {
@@ -504,61 +570,22 @@
   }
 
   window.generatePdfPreview = generatePdfPreview;
-
   window.showScreen = showScreen;
 
   function goToAnalysis() {
     showScreen(2);
   }
-
   window.goToAnalysis = goToAnalysis;
 
   function captureEvidenceFromScreen2() {
-    var sms = document.getElementById('hasSMS');
-    var billing = document.getElementById('hasBilling');
-    appState.evidence = {
-      hasSMSProof: !!sms && !!sms.checked,
-      hasBillingStmt: !!billing && !!billing.checked
-    };
+    // Already stored via updateDynamicCheckbox, nothing extra needed
   }
 
   function goToDocument() {
     captureEvidenceFromScreen2();
     showScreen(3);
   }
-
   window.goToDocument = goToDocument;
-
-  function updateCheckbox(input, boxId) {
-    var box = document.getElementById(boxId);
-    if (input.checked) {
-      box.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
-      box.classList.remove('border-[#b2d8a0]', 'bg-white');
-      box.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
-    } else {
-      box.classList.remove('bg-[#0B6623]', 'border-[#0B6623]');
-      box.classList.add('border-[#b2d8a0]', 'bg-white');
-      box.innerHTML = '';
-    }
-    updateStrength();
-  }
-
-  function updateStrength() {
-    var smsEl = document.getElementById('hasSMS');
-    var billingEl = document.getElementById('hasBilling');
-    var sms = !!smsEl && !!smsEl.checked;
-    var billing = !!billingEl && !!billingEl.checked;
-    var count = (sms ? 1 : 0) + (billing ? 1 : 0);
-    var pct = 60;
-    if (count === 1) pct = 78;
-    if (count === 2) pct = 90;
-    var pctEl = document.getElementById('pct');
-    var fillEl = document.getElementById('fill');
-    if (pctEl) pctEl.textContent = pct + '%';
-    if (fillEl) fillEl.style.width = pct + '%';
-  }
-
-  window.updateCheckbox = updateCheckbox;
 
   function downloadPDF() {
     if (window.generatedPdfUrl) {
@@ -589,7 +616,7 @@
 
   function sharePDF() {
     if (navigator.share) {
-      navigator.share({ title: 'Citadel AI – Form I', text: 'My consumer complaint against Airtel (₹299)' });
+      navigator.share({ title: 'Citadel AI – Form I', text: 'My consumer complaint against ' + (appState.analysis?.company_name || 'Airtel') });
     } else {
       alert('Copy the download link to share!');
     }
@@ -600,7 +627,7 @@
     appState.transcriptionEnglish = '';
     appState.analysis = null;
     appState.analysisStatus = 'idle';
-    appState.evidence = { hasSMSProof: false, hasBillingStmt: false };
+    appState.evidence = {};
     appState.pdfUrl = null;
     window.generatedPdfUrl = null;
     window._pdfPreviewGenerating = false;
@@ -673,11 +700,11 @@
     while (msgs.children.length > 2) msgs.removeChild(msgs.lastChild);
     var t = nowTime();
     var secs = typeof recSecs === 'number' ? recSecs : 5;
-    var issueText = (appState.analysis && (appState.analysis.issue || appState.analysis.issue_type)) || 'Unfair Trade Practice';
-    var sectionText = (appState.analysis && appState.analysis.section) ? 'Section ' + appState.analysis.section : 'Section 2(47)';
-    addMsg('<div class="flex flex-col items-end"><div class="bg-[#dcf8c6] px-3 py-2.5 rounded-2xl rounded-br-sm shadow-sm flex items-center gap-2 max-w-[240px]"><div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs cursor-pointer shrink-0">▶</div><div class="flex items-center gap-0.5 flex-1 h-5">' + waveBarHTML() + '</div><span class="text-[0.68rem] text-gray-500 shrink-0">0:' + String(secs).padStart(2, '0') + '</span></div><span class="text-[0.58rem] text-gray-400 mt-0.5 pr-1">' + t + ' ✓✓</span></div>', 'out');
-    addMsg('<div class="bg-white px-3 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px]"><div class="text-[0.6rem] uppercase tracking-wide text-brand-500 font-semibold mb-1">Transcribed</div><div class="font-hindi text-[0.8rem] text-gray-800 leading-relaxed mb-1.5">"' + (appState.transcription || '') + '"</div><div class="text-[0.7rem] text-gray-400 italic border-t border-gray-100 pt-1.5">' + (appState.transcriptionEnglish || 'Unauthorized charge of ₹299 monthly') + '</div></div><div class="text-[0.58rem] text-gray-400 mt-1 pl-8">' + t + '</div>');
-    addMsg('<div class="bg-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px] text-[0.82rem] text-gray-800 leading-relaxed">I\'ve identified an <strong>' + issueText + '</strong> violation under ' + sectionText + '. Tap below to see your full legal strategy.<span class="block text-[0.6rem] text-gray-400 text-right mt-1">' + t + '</span></div>');
+    var issueText = (appState.analysis && (appState.analysis.issue_type || appState.analysis.issue)) || 'Unfair Trade Practice';
+    var sectionText = (appState.analysis && (appState.analysis.legal_section || appState.analysis.section)) ? 'Section ' + (appState.analysis.legal_section || appState.analysis.section) : 'Section 2(47)';
+    addMsg('<div class="flex flex-col items-end"><div class="bg-[#dcf8c6] px-3 py-2.5 rounded-2xl rounded-br-sm shadow-sm flex items-center gap-2 max-w-[240px]"><div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs cursor-pointer shrink-0">▶️</div><div class="flex items-center gap-0.5 flex-1 h-5">' + waveBarHTML() + '</div><span class="text-[0.68rem] text-gray-500 shrink-0">0:' + String(secs).padStart(2, '0') + '</span></div><span class="text-[0.58rem] text-gray-400 mt-0.5 pr-1">' + t + ' ✓✓</span></div>', 'out');
+    addMsg('<div class="bg-white px-3 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px]"><div class="text-[0.6rem] uppercase tracking-wide text-brand-500 font-semibold mb-1">Transcribed</div><div class="font-hindi text-[0.8rem] text-gray-800 leading-relaxed mb-1.5">"' + (appState.transcription || '') + '"</div></div><div class="text-[0.58rem] text-gray-400 mt-1 pl-8">' + t + '</div>');
+    addMsg('<div class="bg-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px] text-[0.82rem] text-gray-800 leading-relaxed">I\'ve identified an <strong>' + issueText.replace(/_/g, ' ') + '</strong> violation under ' + sectionText + '. Tap below to see your full legal strategy.<span class="block text-[0.6rem] text-gray-400 text-right mt-1">' + t + '</span></div>');
     msgs.scrollTop = msgs.scrollHeight;
   }
 
@@ -828,14 +855,19 @@
     var la = apiResp.legal_analysis || apiResp;
     if (la) {
       appState.analysis = {
+        // Map from new generalized prompt fields
+        issue_type: la.issue_type || la.issue,
+        company_name: la.company_name,
+        amount: la.amount,
+        legal_section: la.legal_section || la.section,
+        relief_sought: la.relief_sought || la.relief,
+        key_dates: la.key_dates,
+        confidence: la.confidence,
+        // Keep old fields for compatibility
         issue: la.issue_type || la.issue,
-        issue_type: la.issue_type,
-        section: la.section,
+        section: la.legal_section || la.section,
         relief: la.relief_sought || la.relief,
-        relief_sought: la.relief_sought,
-        party: la.opposite_party || la.party,
-        opposite_party: la.opposite_party,
-        amount: la.amount
+        party: la.company_name
       };
     }
   }
@@ -877,7 +909,6 @@
         appState.analysis = null;
         appState.analysisStatus = 'loading';
 
-        // Auto-transition to Screen 2 after transcription (show loader)
         showScreen(2);
 
         showUploadBar('✓ Transcribed — analyzing with AI...', true);
@@ -890,7 +921,6 @@
         if (loadingEl) loadingEl.classList.add('hidden');
         appState.analysisStatus = 'ready';
         setStateFromAnalysis(analyzeResp);
-        if (!appState.transcriptionEnglish) appState.transcriptionEnglish = 'Unauthorized charge of ₹299 monthly';
         try {
           localStorage.setItem('citadel_transcription', analyzeResp.transcription != null ? analyzeResp.transcription : '');
           localStorage.setItem('citadel_analysis', JSON.stringify(analyzeResp.legal_analysis != null ? analyzeResp.legal_analysis : {}));
@@ -919,21 +949,25 @@
 
   function runDemoFlow() {
     appState.transcription = '₹299 का अनधिकृत शुल्क हर महीने काटा जा रहा है';
-    appState.transcriptionEnglish = 'Unauthorized charge of ₹299 monthly by Airtel.';
     appState.analysis = null;
     appState.analysisStatus = 'loading';
 
-    // Auto-transition to Screen 2 (loading)
     showScreen(2);
 
-    // Simulate analysis completion
     setTimeout(function() {
       appState.analysis = {
-        issue: 'Unfair Trade Practice',
+        issue_type: 'unauthorized_charge',
+        company_name: 'Airtel',
+        amount: 299,
+        legal_section: '2(47)',
+        relief_sought: 'refund + compensation',
+        key_dates: null,
+        confidence: 'high',
+        // compatibility
+        issue: 'unauthorized_charge',
         section: '2(47)',
-        relief: '₹299 + Compensation',
-        party: 'Airtel India Ltd.',
-        amount: '299'
+        relief: 'refund + compensation',
+        party: 'Airtel'
       };
       appState.analysisStatus = 'ready';
       appendComplaintChatBubbles();
@@ -944,17 +978,16 @@
   function showTranscriptionFlow(skipChatBubbles) {
     var t = nowTime();
     if (!skipChatBubbles) {
-      addMsg('<div class="flex flex-col items-end"><div class="bg-[#dcf8c6] px-3 py-2.5 rounded-2xl rounded-br-sm shadow-sm flex items-center gap-2 max-w-[240px]"><div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs cursor-pointer shrink-0">▶</div><div class="flex items-center gap-0.5 flex-1 h-5">' + waveBarHTML() + '</div><span class="text-[0.68rem] text-gray-500 shrink-0">0:' + String(recSecs).padStart(2, '0') + '</span></div><span class="text-[0.58rem] text-gray-400 mt-0.5 pr-1">' + t + ' ✓✓</span></div>', 'out');
+      addMsg('<div class="flex flex-col items-end"><div class="bg-[#dcf8c6] px-3 py-2.5 rounded-2xl rounded-br-sm shadow-sm flex items-center gap-2 max-w-[240px]"><div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs cursor-pointer shrink-0">▶️</div><div class="flex items-center gap-0.5 flex-1 h-5">' + waveBarHTML() + '</div><span class="text-[0.68rem] text-gray-500 shrink-0">0:' + String(recSecs).padStart(2, '0') + '</span></div><span class="text-[0.58rem] text-gray-400 mt-0.5 pr-1">' + t + ' ✓✓</span></div>', 'out');
       showTyping();
     }
     setTimeout(function() {
       if (!skipChatBubbles) removeTyping();
-      addMsg('<div class="bg-white px-3 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px]"><div class="text-[0.6rem] uppercase tracking-wide text-brand-500 font-semibold mb-1">Transcribed</div><div class="font-hindi text-[0.8rem] text-gray-800 leading-relaxed mb-1.5">"' + appState.transcription + '"</div><div class="text-[0.7rem] text-gray-400 italic border-t border-gray-100 pt-1.5">' + (appState.transcriptionEnglish || 'Unauthorized charge of ₹299 monthly') + '</div></div><div class="text-[0.58rem] text-gray-400 mt-1 pl-8">' + t + '</div>');
+      addMsg('<div class="bg-white px-3 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px]"><div class="text-[0.6rem] uppercase tracking-wide text-brand-500 font-semibold mb-1">Transcribed</div><div class="font-hindi text-[0.8rem] text-gray-800 leading-relaxed mb-1.5">"' + appState.transcription + '"</div></div><div class="text-[0.58rem] text-gray-400 mt-1 pl-8">' + t + '</div>');
       showTyping();
       setTimeout(function() {
         removeTyping();
         addMsg('<div class="bg-white px-3 py-2 rounded-2xl rounded-bl-sm shadow-sm max-w-[240px] text-[0.82rem] text-gray-800 leading-relaxed">I\'ve identified an <strong>Unfair Trade Practice</strong> violation under Section 2(47). Tap below to see your full legal strategy.<span class="block text-[0.6rem] text-gray-400 text-right mt-1">' + t + '</span></div>');
-        // Manual navigation removed — do not reveal next button
       }, skipChatBubbles ? 100 : 1600);
     }, skipChatBubbles ? 100 : 2000);
   }
