@@ -15,12 +15,22 @@ def get_transcript_from_uri(uri):
     if not uri.startswith("s3://"):
         with urllib.request.urlopen(uri, timeout=30) as resp:
             data = json.loads(resp.read().decode())
-        return (data.get("results", {}).get("transcripts") or [{}])[0].get("transcript", "")
+        transcripts = (data.get("results", {}).get("transcripts") or [{}])
+        first = transcripts[0] or {}
+        text = first.get("transcript")
+        if text is None:
+            text = first.get("transcription", "")
+        return text
     
     parts = uri.replace("s3://", "").split("/", 1)
     obj = s3.get_object(Bucket=parts[0], Key=parts[1])
     data = json.loads(obj["Body"].read().decode())
-    return (data.get("results", {}).get("transcripts") or [{}])[0].get("transcript", "")
+    transcripts = (data.get("results", {}).get("transcripts") or [{}])
+    first = transcripts[0] or {}
+    text = first.get("transcript")
+    if text is None:
+        text = first.get("transcription", "")
+    return text
 
 def lambda_handler(event, context):
     try:
