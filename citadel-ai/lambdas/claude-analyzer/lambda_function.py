@@ -6,7 +6,7 @@ bedrock = boto3.client('bedrock-runtime', region_name='us-east-1')
 
 def call_nova(transcription):
     prompt = f"""You are a legal AI assistant for Indian consumer complaints.
-Analyze this Hindi consumer complaint and return ONLY a JSON object. No explanation, no markdown, no extra text. Just the raw JSON.
+Analyze this consumer complaint (it may be written in Hindi or English) and return ONLY a JSON object. No explanation, no markdown, no extra text. Just the raw JSON.
 
 Complaint: {transcription}
 
