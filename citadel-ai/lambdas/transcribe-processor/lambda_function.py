@@ -35,7 +35,8 @@ def lambda_handler(event, context):
 
         transcribe.start_transcription_job(
             TranscriptionJobName=job_name,
-            LanguageCode="hi-IN",
+            IdentifyLanguage=True,
+            LanguageOptions=["hi-IN", "en-IN"],
             MediaFormat=media_format,
             Media={"MediaFileUri": media_uri},
         )
