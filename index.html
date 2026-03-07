@@ -12,29 +12,29 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50:  '#f0faf5',
-              100: '#d6f0e3',
-              200: '#a8dfc4',
-              500: '#1a6b3c',
-              600: '#155732',
-              700: '#0f3f24',
-            },
-            wa: {
-              bg:      '#e8f5e1',
-              phone:   '#d4edca',
-              header:  '#0B6623',
-              card:    '#ffffff',
-              card2:   '#f0faf0',
-              border:  '#b2d8a0',
-              accent:  '#0B6623',
-              tag:     '#e2f4d8',
-              muted:   '#5a8a5a',
-              strong:  '#1a3a1a',
-              bar:     '#c8e8b8',
-            },
-            forest: { 50:'#f0faf5', 100:'#d6f0e3', 200:'#b2d8c2', 500:'#0B6623', 600:'#094f1b' }
+          brand: {
+            50:  '#f0faf5',
+            100: '#d6f0e3',
+            200: '#a8dfc4',
+            500: '#004225',
+            600: '#003a1f',
+            700: '#0f3f24',
           },
+          wa: {
+            bg:      '#e8f5e1',
+            phone:   '#d4edca',
+            header:  '#004225',
+            card:    '#ffffff',
+            card2:   '#f0faf0',
+            border:  '#b2d8a0',
+            accent:  '#004225',
+            tag:     '#e2f4d8',
+            muted:   '#5a8a5a',
+            strong:  '#1a3a1a',
+            bar:     '#c8e8b8',
+          },
+          forest: { 50:'#f0faf5', 100:'#d6f0e3', 200:'#b2d8c2', 500:'#004225', 600:'#003a1f' }
+        },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             hindi: ['Noto Sans Devanagari', 'sans-serif'],
@@ -167,11 +167,11 @@
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="screen2" class="citadel-screen hidden w-[360px] min-h-[680px] bg-[#e8f5e1] rounded-[36px] shadow-2xl overflow-hidden flex-col">
 
-  <div class="bg-[#0B6623] text-white/80 flex justify-between items-center px-5 pt-2.5 pb-1.5 text-xs font-semibold shrink-0">
+  <div class="bg-[#004225] text-white/80 flex justify-between items-center px-5 pt-2.5 pb-1.5 text-xs font-semibold shrink-0">
     <span>9:41</span><span>🔋 100%</span>
   </div>
 
-  <div class="bg-[#0B6623] px-4 py-3 flex items-center gap-2.5 shrink-0">
+  <div class="bg-[#004225] px-4 py-3 flex items-center gap-2.5 shrink-0">
     <button type="button" onclick="showScreen(1)" class="text-white/80 text-lg no-underline shrink-0 bg-transparent border-none cursor-pointer">←</button>
     <div>
       <div class="text-white font-semibold text-[0.95rem]">Your Legal Strategy</div>
@@ -182,15 +182,15 @@
 
   <div class="flex-1 overflow-y-auto no-scrollbar px-3.5 py-4 flex flex-col gap-3.5 bg-[#e8f5e1]">
     <div id="loadingWrap" class="flex flex-col items-center justify-center gap-4 py-16 text-center">
-      <div class="w-12 h-12 rounded-full border-[3px] border-[#b2d8a0] border-t-[#0B6623] spinner"></div>
+      <div class="w-12 h-12 rounded-full border-[3px] border-[#b2d8a0] border-t-[#004225] spinner"></div>
       <div>
         <h3 class="text-[#1a3a1a] font-semibold text-[1rem]">Analyzing complaint...</h3>
         <!-- Removed "Claude AI is reviewing your case" line -->
       </div>
       <div class="flex flex-col gap-2 mt-1 text-left">
-      <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Detecting language and transcribing audio...</div>
-        <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Identifying legal violations...</div>
-        <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#0B6623]"></span>Building legal strategy...</div>
+      <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#004225]"></span>Detecting language and transcribing audio...</div>
+        <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#004225]"></span>Identifying legal violations...</div>
+        <div class="flex items-center gap-2 text-[0.75rem] text-[#5a8a5a]"><span class="w-1.5 h-1.5 rounded-full bg-[#004225]"></span>Building legal strategy...</div>
       </div>
     </div>
 
@@ -211,27 +211,27 @@
       </div>
 
       <!-- Issue Identified Card (Removed company and amount lines) -->
-      <div class="bg-white border-2 border-[#0B6623] rounded-2xl p-4 shadow-sm slide-up-2">
+      <div class="bg-white border-2 border-[#004225] rounded-2xl p-4 shadow-sm slide-up-2">
         <div class="flex items-center gap-2 mb-3">
           <div class="w-7 h-7 rounded-full bg-[#e2f4d8] border border-[#b2d8a0] flex items-center justify-center text-sm">✓</div>
           <span class="text-[0.7rem] font-semibold text-[#1a3a1a] uppercase tracking-wide">Issue Identified</span>
-          <span class="ml-auto bg-[#e2f4d8] border border-[#b2d8a0] text-[#0B6623] text-[0.62rem] px-2.5 py-0.5 rounded-full font-semibold" id="confidenceChip">High Confidence</span>
+          <span class="ml-auto bg-[#e2f4d8] border border-[#b2d8a0] text-[#004225] text-[0.62rem] px-2.5 py-0.5 rounded-full font-semibold" id="confidenceChip">High Confidence</span>
         </div>
-        <div class="inline-block bg-[#e2f4d8] border border-[#b2d8a0] text-[#0B6623] px-3.5 py-1.5 rounded-full text-[0.82rem] font-semibold mb-3" id="issueType">Unfair Trade Practice</div>
+        <div class="inline-block bg-[#e2f4d8] border border-[#b2d8a0] text-[#004225] px-3.5 py-1.5 rounded-full text-[0.82rem] font-semibold mb-3" id="issueType">Unfair Trade Practice</div>
         <div class="flex flex-col gap-1.5 mb-3">
           <div class="flex items-start gap-2 text-[0.75rem]">
-            <span class="text-[#0B6623] mt-0.5">●</span>
+            <span class="text-[#004225] mt-0.5">●</span>
             <span class="text-[#5a8a5a]"><strong class="text-[#1a3a1a]" id="sectionRef">Section 2(47)</strong> – Consumer Protection Act, 2019</span>
           </div>
           <!-- Removed company and amount lines -->
           <!-- Key Dates (optional) -->
           <div class="flex items-start gap-2 text-[0.75rem] hidden" id="keyDatesRow">
-            <span class="text-[#0B6623] mt-0.5">●</span>
+            <span class="text-[#004225] mt-0.5">●</span>
             <span class="text-[#5a8a5a]"><strong class="text-[#1a3a1a]">Key date:</strong> <span id="keyDatesDisplay"></span></span>
           </div>
         </div>
         <div class="bg-[#f0faf0] border border-[#b2d8a0] rounded-xl px-3 py-2.5 mb-3">
-          <div class="text-[0.68rem] text-[#0B6623] font-semibold mb-1">Applicable Sections</div>
+          <div class="text-[0.68rem] text-[#004225] font-semibold mb-1">Applicable Sections</div>
           <div class="text-[0.72rem] text-[#5a8a5a] leading-relaxed" id="applicableSectionsStatic">
             Section 35 — Filing at District Consumer Forum<br/>
             Section 42 — Compensation for deficiency of service
@@ -239,14 +239,14 @@
         </div>
         <div class="flex flex-col gap-2">
           <div class="flex gap-2.5 items-start bg-[#f0faf0] border border-[#b2d8a0] rounded-xl p-2.5">
-            <div class="w-5 h-5 rounded-full bg-[#0B6623] flex items-center justify-center text-white text-[0.62rem] font-bold shrink-0">1</div>
+            <div class="w-5 h-5 rounded-full bg-[#004225] flex items-center justify-center text-white text-[0.62rem] font-bold shrink-0">1</div>
             <div class="text-[0.78rem]">
               <div class="text-[#1a3a1a] font-medium">File consumer complaint (Form I)</div>
               <div class="text-[#5a8a5a] text-[0.7rem]">District Consumer Forum, Lucknow</div>
             </div>
           </div>
           <div class="flex gap-2.5 items-start bg-[#f0faf0] border border-[#b2d8a0] rounded-xl p-2.5">
-            <div class="w-5 h-5 rounded-full bg-[#0B6623] flex items-center justify-center text-white text-[0.62rem] font-bold shrink-0">2</div>
+            <div class="w-5 h-5 rounded-full bg-[#004225] flex items-center justify-center text-white text-[0.62rem] font-bold shrink-0">2</div>
             <div class="text-[0.78rem]">
               <div class="text-[#1a3a1a] font-medium">Gather evidence</div>
               <div class="text-[#5a8a5a] text-[0.7rem]">Bills, receipts, service agreement</div>
@@ -254,7 +254,7 @@
           </div>
         </div>
         <div class="flex items-center gap-1.5 mt-2.5 text-[0.7rem] text-[#5a8a5a]">
-          ⏱ Timeline: <span class="text-[#0B6623] font-medium">30–90 days</span>
+          ⏱ Timeline: <span class="text-[#004225] font-medium">30–90 days</span>
         </div>
       </div>
 
@@ -269,19 +269,19 @@
         <div class="mt-3.5">
           <div class="flex justify-between text-[0.72rem] text-[#5a8a5a] mb-1.5">
             <span>Case Strength</span>
-            <strong id="pct" class="text-[#0B6623] text-[0.85rem]">78%</strong>
+            <strong id="pct" class="text-[#004225] text-[0.85rem]">78%</strong>
           </div>
           <div class="h-1.5 bg-[#c8e8b8] rounded-full overflow-hidden">
-            <div id="fill" class="h-full bg-gradient-to-r from-[#0B6623] to-[#4caf7d] rounded-full transition-all duration-1000" style="width:0%"></div>
+            <div id="fill" class="h-full bg-gradient-to-r from-[#004225] to-[#4caf7d] rounded-full transition-all duration-1000" style="width:0%"></div>
           </div>
         </div>
       </div>
 
-      <button type="button" onclick="goToDocument()" class="w-full py-3.5 bg-[#0B6623] text-white font-bold text-[0.92rem] rounded-xl hover:bg-[#094f1b] active:scale-95 transition-all duration-150 shadow-md slide-up-4">Continue to PDF →</button>
+      <button type="button" onclick="goToDocument()" class="w-full py-3.5 bg-[#004225] text-white font-bold text-[0.92rem] rounded-xl hover:bg-[#003a1f] active:scale-95 transition-all duration-150 shadow-md slide-up-4">Continue to PDF →</button>
     </div>
   </div>
 
-  <div class="flex items-center justify-center gap-1.5 py-2.5 bg-[#0B6623] shrink-0">
+  <div class="flex items-center justify-center gap-1.5 py-2.5 bg-[#004225] shrink-0">
     <div class="w-2 h-2 rounded-full bg-white/60"></div>
     <div class="w-5 h-2 rounded bg-white"></div>
     <div class="w-2 h-2 rounded-full bg-white/30"></div>
@@ -302,7 +302,7 @@
     <div id="pdf-preview-container" class="hidden">
       <iframe id="pdf-preview" class="w-full h-[420px] rounded-lg border" title="Form I PDF"></iframe>
     </div>
-    <button type="button" onclick="downloadPDF()" class="w-full py-4 bg-[#0B6623] text-white font-bold text-[0.95rem] rounded-xl hover:bg-forest-600 active:scale-95 transition-all duration-150 flex items-center justify-center gap-2 shadow-md slide-up-2">⬇️ Download PDF</button>
+    <button type="button" onclick="downloadPDF()" class="w-full py-4 bg-[#004225] text-white font-bold text-[0.95rem] rounded-xl hover:bg-[#003a1f] active:scale-95 transition-all duration-150 flex items-center justify-center gap-2 shadow-md slide-up-2">⬇️ Download PDF</button>
     <button type="button" onclick="sharePDF()" class="w-full py-3.5 bg-white border border-gray-200 text-gray-700 font-medium text-[0.9rem] rounded-xl hover:border-forest-500 hover:text-forest-500 transition-all duration-150 flex items-center justify-center gap-2 slide-up-3">📤 Share Document</button>
     <div class="bg-forest-50 border border-forest-200 rounded-xl p-3.5 slide-up-4">
       <h4 class="text-[0.7rem] text-forest-500 uppercase tracking-wide font-bold mb-3">What to do next</h4>
@@ -424,10 +424,10 @@
       const id = `ev_${index}`;
       const boxId = `cb_${index}`;
       const label = document.createElement('label');
-      label.className = 'flex items-center gap-3 p-3 bg-[#f0faf0] border border-[#b2d8a0] rounded-xl cursor-pointer group hover:border-[#0B6623] transition-colors';
+      label.className = 'flex items-center gap-3 p-3 bg-[#f0faf0] border border-[#b2d8a0] rounded-xl cursor-pointer group hover:border-[#004225] transition-colors';
       label.innerHTML = `
         <input type="checkbox" id="${id}" class="hidden" onchange="window.updateDynamicCheckbox(this, '${boxId}', '${q}')"/>
-        <div id="${boxId}" class="w-6 h-6 rounded-md border-2 border-[#b2d8a0] bg-white flex items-center justify-center shrink-0 transition-all duration-150 group-hover:border-[#0B6623]"></div>
+        <div id="${boxId}" class="w-6 h-6 rounded-md border-2 border-[#b2d8a0] bg-white flex items-center justify-center shrink-0 transition-all duration-150 group-hover:border-[#004225]"></div>
         <div>
           <div class="text-[#1a3a1a] text-[0.82rem] font-medium">${q}</div>
         </div>
@@ -440,7 +440,7 @@
           checkbox.checked = true;
           const boxDiv = document.getElementById(boxId);
           if (boxDiv) {
-            boxDiv.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
+            boxDiv.classList.add('bg-[#004225]', 'border-[#004225]');
             boxDiv.classList.remove('border-[#b2d8a0]', 'bg-white');
             boxDiv.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
           }
@@ -454,12 +454,12 @@
   window.updateDynamicCheckbox = function(input, boxId, questionText) {
     const box = document.getElementById(boxId);
     if (input.checked) {
-      box.classList.add('bg-[#0B6623]', 'border-[#0B6623]');
+      box.classList.add('bg-[#004225]', 'border-[#004225]');
       box.classList.remove('border-[#b2d8a0]', 'bg-white');
       box.innerHTML = '<span class="text-white text-xs font-bold">✓</span>';
       appState.evidence[questionText] = true;
     } else {
-      box.classList.remove('bg-[#0B6623]', 'border-[#0B6623]');
+      box.classList.remove('bg-[#004225]', 'border-[#004225]');
       box.classList.add('border-[#b2d8a0]', 'bg-white');
       box.innerHTML = '';
       appState.evidence[questionText] = false;
@@ -704,7 +704,7 @@
   var WH = [8,14,22,16,10,20,12,18,8,24,14,10,18,16,12];
   function waveBarHTML() {
     return WH.map(function(h) {
-      return '<div style="width:3px;height:' + h + 'px;border-radius:2px;background:#1a6b3c;opacity:0.7"></div>';
+      return '<div style="width:3px;height:' + h + 'px;border-radius:2px;background:#004225;opacity:0.7"></div>';
     }).join('');
   }
 
@@ -775,7 +775,7 @@
       analyser.getByteTimeDomainData(data);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineWidth = 2;
-      ctx.strokeStyle = '#1a6b3c';
+      ctx.strokeStyle = '#004225';
       ctx.beginPath();
       var sw = canvas.width / data.length;
       var x = 0;
