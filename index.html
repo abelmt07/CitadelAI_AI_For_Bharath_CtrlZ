@@ -634,6 +634,14 @@
     window._pdfPreviewGenerating = false;
     var msgs = document.getElementById('messages');
     if (msgs) while (msgs.children.length > 2) msgs.removeChild(msgs.lastChild);
+    window.generatedPdfUrl = null;
+    window._pdfPreviewGenerating = false;
+    var iframe = document.getElementById('pdf-preview');
+    if (iframe) iframe.src = '';
+    var container = document.getElementById('pdf-preview-container');
+    if (container) container.classList.add('hidden');
+    var spinner = document.getElementById('pdfSpinner');
+    if (spinner) spinner.remove();
     showScreen(1);
   }
 
