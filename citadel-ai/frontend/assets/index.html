@@ -541,19 +541,20 @@
     if (window._pdfPreviewGenerating) return;
     window._pdfPreviewGenerating = true;
     var analysis = appState.analysis || {};
-    var transcription = appState.transcription || '';
     var ev = appState.evidence || {};
     var caseData = {
-      complainant_name: 'Ramesh Kumar',
+      complainant_name: 'Complainant',
       father_name: 'Shri [Father Name]',
       age: '[Age]',
-      complainant_address: 'Hazratganj, Lucknow',
-      opposite_party: analysis.company_name || analysis.opposite_party || analysis.party || 'Bharti Airtel Limited',
+      complainant_address: 'Lucknow, Uttar Pradesh',
+      opposite_party: analysis.opposite_party || analysis.company_name || analysis.party || 'Unknown Company',
       op_address: 'Corporate Office, New Delhi - 110001',
-      amount: parseInt(analysis.amount, 10) || 299,
-      section: (analysis.legal_section || analysis.section || '2(47)').replace(/[^0-9()]/g, ''),
+      amount: parseInt(analysis.amount, 10) || 0,
+      section: analysis.section || analysis.legal_section || '2(47)',
+      issue_type: analysis.issue_type || 'other',
+      relief_sought: analysis.relief_sought || analysis.relief || 'refund',
       has_sms_proof: !!ev['Do you have the SMS showing the deduction?'],
-      has_billing_statement: !!ev['Do you have a bank statement or bill?'] // simplistic, will be improved
+      has_billing_statement: !!ev['Do you have a bank statement or bill?']
     };
     apiPdf(caseData)
       .then(function(res) {
