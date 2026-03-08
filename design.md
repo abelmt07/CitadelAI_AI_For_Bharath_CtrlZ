@@ -10,10 +10,8 @@ sequenceDiagram
     participant Ramesh
     participant App
     participant Transcribe
-    participant Claude3
-    participant EntityExtractor
-    participant EvidenceValidator
-    participant Cohere
+    participant NovaLite
+    participant Validator
     participant Template
     
     Ramesh->>App: Hindi voice note
@@ -21,73 +19,73 @@ sequenceDiagram
     Note over Transcribe: Fallback: Text input
     Transcribe-->>App: Text
     
-    App->>Claude3: Legal analysis
-    Note over Claude3: Fallback: Cached responses
-    Claude3->>Cohere: Retrieve relevant CPA sections
-    Cohere-->>Claude3: Vector search results (top-k=3)
-    Claude3->>Claude3: Synthesize with complaint context
-    Claude3-->>App: Legal strategy (unstructured)
+    App->>NovaLite: Legal analysis + entity extraction
+    Note over NovaLite: Amazon Nova Lite on Bedrock<br/>Extracts issue, company, amount, section
+    NovaLite-->>App: Structured JSON data
     
-    App->>EntityExtractor: Extract Form I fields
-    Note over EntityExtractor: Regex + few-shot prompting<br/>Complainant, Opposite Party,<br/>Relief Sought, Jurisdiction
-    EntityExtractor-->>App: Structured data
-    
-    App->>EvidenceValidator: Validate required fields
-    Note over EvidenceValidator: Invoice? Date? Jurisdiction?
-    EvidenceValidator-->>App: Missing evidence flags
+    App->>Validator: Validate required fields
+    Note over Validator: Invoice? Date within 2 years?<br/>Jurisdiction match?
+    Validator-->>App: Missing evidence flags
     
     App->>Ramesh: Evidence checklist
     Ramesh->>App: Provides details
     
-    App->>Claude3: Generate Form I content
-    Claude3->>Template: Populate structured data
+    App->>NovaLite: Generate Form I content
+    NovaLite->>Template: Populate structured data
     Template-->>App: PDF draft
     App-->>Ramesh: Download ready
     
     Note over Ramesh,Template: Target: Sub-2-minutes
-```
+    ```
+
+---
 
 ### Architectural Components
 
 | Component | AWS Service | Purpose | Key Design Choice |
 |-----------|-------------|---------|-------------------|
-| **Voice Processor** | Amazon Transcribe | Hindi speech-to-text with legal domain optimization | Streaming transcription for real-time feedback, confidence scoring |
-| **Legal Brain** | Claude 3 (Bedrock) | Analyze complaints, identify legal issues, generate documents | Large context window for Consumer Protection Act knowledge |
-| **Entity Extractor** | AWS Lambda | Convert unstructured Claude output to structured Form I fields | Regex + few-shot prompting for field mapping |
-| **Knowledge Engine** | Cohere Embed | Vector search across legal documents in Hindi/English | Multilingual embeddings for cross-language legal retrieval |
-| **Workflow Orchestrator** | Amazon Q Business | Coordinate Sub-2-Minute pipeline with conversational state | Stateful AI orchestration vs. rigid state machines |
+| **Voice Processor** | Amazon Transcribe | Hindi speech-to-text | Streaming transcription, confidence scoring |
+| **Legal Brain** | **Amazon Nova Lite (Bedrock)** | Analyze complaints, extract entities, generate legal text | Cost-effective, fast inference for MVP |
 | **Evidence Validator** | AWS Lambda | Rule-based validation before document generation | Invoice presence, 2-year limitation, jurisdiction match |
 | **Document Generator** | Lambda + ReportLab | Generate court-compliant Form I PDFs | Template-based with legal validation |
-| **Session Manager** | DynamoDB | Track user progress, temporary data storage | NoSQL for flexible schema, auto-expiring records |
-| **Security Layer** | IAM + KMS | Encrypt voice data, manage access controls | Least privilege, automatic key rotation |
+| **API Layer** | Amazon API Gateway | Connect frontend to Lambda functions | CORS-enabled, IAM-secured endpoints |
+| **Storage** | Amazon S3 | Store audio uploads and generated PDFs | Presigned URLs for secure downloads |
+| **Frontend Hosting** | Vercel / AWS Amplify | Host HTML + Tailwind interface | CI/CD from GitHub, zero DevOps |
+| **Security Layer** | AWS IAM | Manage access controls | Least privilege, service-specific roles |
+
+*Note: Architecture simplified from original design.md to prioritize rapid development within the 5-day build window. Cohere Embed, Amazon Q, and DynamoDB were excluded in favor of direct Lambda calls and hardcoded legal knowledge for the MVP.*
 
 ### Data Flow: Privacy by Design
 
 ```mermaid
 graph LR
-    A["🎤 Voice Input"] --> B["🔒 Encrypted HTTPS"]
-    B --> C["💾 Voice Buffer<br/>Immediate Delete"]
-    C --> D["🗣️ Transcribe"]
-    D --> E["🧠 Claude 3<br/>Legal Analysis"]
-    E --> F["📊 Entity Extractor<br/>Structure Data"]
-    F --> G["✅ Evidence Validator"]
-    G --> H["📄 Template Engine"]
-    H --> I["📑 Form I PDF"]
-    I --> J["📥 User Download"]
-    J --> K["🗑️ Auto-delete<br/>Transcript<br/>24h TTL"]
+    A["🎤 Voice Input"] --> B["🔒 API Gateway"]
+    B --> C["📦 S3 Bucket<br/>Audio Upload"]
+    C --> D["⚡ Transcribe Lambda<br/>Speech→Text"]
+    D --> E["⚡ Nova Lite Lambda<br/>Legal Analysis + Entity Extraction"]
+    E --> F["⚡ PDF Generator Lambda<br/>Form I Creation"]
+    F --> G["📑 S3 PDF Storage"]
+    G --> H["🔗 Presigned URL"]
+    H --> I["📥 User Download"]
     
     style A fill:#0B6623,color:#fff
     style B fill:#2A6E6E,color:#fff
     style C fill:#4F7968,color:#fff
     style D fill:#0B6623,color:#fff
     style E fill:#2A6E6E,color:#fff
-    style F fill:#2A6E6E,color:#fff,stroke:#fff,stroke-width:2px
-    style G fill:#4F7968,color:#fff
-    style H fill:#4F7968,color:#fff
-    style I fill:#0B6623,color:#fff
-    style J fill:#2A6E6E,color:#fff
-    style K fill:#4F7968,color:#fff
+    style F fill:#4F7968,color:#fff
+    style G fill:#0B6623,color:#fff
+    style H fill:#2A6E6E,color:#fff
+    style I fill:#4F7968,color:#fff
 ```
+
+
+---
+
+**Data Lifecycle**:
+- Voice: Deleted immediately post-transcription
+- Transcript: Stored 24h for session continuity, then purged
+- Form I draft: User-downloaded; 7-day retention for re-download only
 
 ### Scaling for Bharat
 
@@ -95,22 +93,21 @@ graph LR
 
 **Phase 1: Hackathon (1-100 users)**
 - Single AWS region (Mumbai)
-- Basic Lambda functions with 3GB memory
-- DynamoDB on-demand pricing
+- Basic Lambda functions with 1024MB memory
 - Manual monitoring
+- **Vercel** frontend hosting
 
 **Phase 2: Pilot (100-10,000 users)**
 - Multi-AZ deployment for reliability
 - Lambda provisioned concurrency for consistent performance
-- DynamoDB auto-scaling with read replicas
 - CloudWatch automated monitoring
+- DynamoDB (if session persistence needed)
 
 **Phase 3: Scale (10,000-1,000,000 users)**
-- Multi-region deployment (Mumbai, Singapore, Frankfurt)
+- Multi-region deployment (Mumbai, Singapore)
 - API Gateway with caching and throttling
-- Bedrock model endpoints with reserved capacity
-- ElastiCache for legal template caching
-- Cost optimization: Spot instances for batch processing
+- Bedrock model endpoints with provisioned throughput
+- Cost optimization: Lambda reserved concurrency
 
 **Language Expansion (Post-Hackathon)**
 - Q2 2026: Tamil (ta-IN), Telugu (te-IN), Malayalam (ml-IN), Marathi (mr-IN)
@@ -122,56 +119,54 @@ graph LR
 
 | Problem | Our Solution | Trade-off |
 |---------|--------------|-----------|
-| **Hindi speech accuracy varies by accent/region** | Multi-model ensemble: Transcribe + Whisper fallback, confidence scoring, text input option | Higher cost for dual transcription vs. user experience |
-| **Sub-2-Minute deadline with complex AI processing** | Parallel processing: Transcription + legal analysis simultaneously, cached legal knowledge | Memory usage vs. speed optimization |
-| **Evidence Validation Fails** | Rule-based checks (Invoice, Date, Jurisdiction) + user re-prompt via Amazon Q | Accuracy vs. user friction |
-| **Legal accuracy cannot be compromised** | Template validation: Pre-verified Form I templates, Claude 3 fact-checking, human review samples | Development time vs. legal liability risk |
-| **AWS costs could spiral with AI usage** | Smart caching: Common legal explanations cached, request batching, usage caps per user | Feature richness vs. cost control |
-| **Consumer Protection Act complexity** | Focused scope: Start with telecom/e-commerce only, expand gradually | Market coverage vs. technical feasibility |
+| **Hindi speech accuracy varies by accent/region** | Transcribe hi-IN model + text input fallback | Simpler than multi-model ensemble |
+| **Sub-2-Minute deadline with AI processing** | Single Nova Lite call handles both analysis + extraction | No parallel processing needed |
+| **Evidence validation failures** | Rule-based checks + user re-prompt | Accuracy vs. user friction |
+| **Legal accuracy cannot be compromised** | Template validation + hardcoded CPA sections | Limited scope but 100% reliable |
+| **AWS costs could spiral** | Single Lambda per function, no orchestration overhead | Less flexible but cost-effective |
 
 ### Demo vs. Production
 
-**Hackathon Demo (48 hours)**:
+**Hackathon Submission (5-day build)**:
 - ✅ Single user flow: Ramesh's telecom complaint
-- ✅ Pre-loaded legal templates for common issues
-- ✅ Basic Hindi transcription with fallback
-- ✅ Simple PDF generation with manual formatting
-- ✅ Local testing with mock AWS responses
+- ✅ Hardcoded CPA sections (Section 2(47), 2(9), etc.)
+- ✅ Hindi transcription with fallback
+- ✅ PDF generation with ReportLab
+- ✅ Live URL on Vercel
+- ✅ Demo video showing end-to-end flow
 
 **Production System (3-6 months)**:
 - 🚀 Multi-user concurrent processing
 - 🚀 Dynamic legal template generation
-- 🚀 Advanced NLP for complex complaint analysis
 - 🚀 WhatsApp integration for mass accessibility
 - 🚀 Real-time legal database updates
-- 🚀 Multi-language support
+- 🚀 Multi-language support (12 Indian languages)
+- 🚀 Court e-filing API integration
 
 **Technical Debt We Accept for Hackathon**:
 - Hardcoded legal templates vs. dynamic generation
-- Single-threaded processing vs. parallel pipelines
+- No session persistence (in-memory only)
 - Basic error handling vs. comprehensive recovery
 - Manual testing vs. automated test suites
 
 **Hackathon Constraints Acknowledged:**
-- 48-hour development window limits testing rigor
+- 5-day development window limits testing rigor
 - AWS credits constrain scale testing
 - Team of 4 requires focused MVP scope
 - Demo prioritizes one perfect user journey (Ramesh's telecom case)
 
 ### Why This Architecture Wins
 
-• **48-Hour Buildable** - Serverless components snap together
+• **48-Hour Buildable** - Simplified serverless components snap together
 
-• **Infinite Scale** - Auto-scaling from 1 to 1M users  
+• **Infinite Scale** - Auto-scaling from 1 to 1M users with Lambda + API Gateway
 
 • **Cost Optimized** - ₹3-5 per request vs ₹5,000 lawyer fee
 
-• **Privacy by Design** - No permanent voice storage
+• **Privacy by Design** - Voice deleted immediately; transcripts expire in 24h
 
 • **User-First** - Sub-2-Minute promise enforced in architecture
 
 ---
 
-
-**The Bottom Line**: This isn't just a hackathon project—it's a production-ready architecture that can serve 1 million users while maintaining the sub-2-minute promise that makes justice accessible to Ramesh and millions like him across India.
-
+**The Bottom Line**: This isn't just a hackathon project—it's a production-ready architecture that can serve 1 million users while maintaining the sub-2-minute promise that makes justice accessible to Ramesh and millions like him across India. By simplifying the stack, we've made it **buildable in 5 days** and **scalable for the future**.
