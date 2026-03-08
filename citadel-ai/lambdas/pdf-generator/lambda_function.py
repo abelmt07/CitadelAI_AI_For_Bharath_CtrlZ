@@ -10,6 +10,14 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, HRFlowable
 from reportlab.lib import colors
 
+
+def blank(val, length=20):
+    """Return val if meaningful, else underscores for hand-filling."""
+    v = str(val).strip() if val else ''
+    if not v or v in ('None', 'null', '0', '___________________', '____', '[Age]', '[Father Name]'):
+        return '_' * length
+    return v
+
 s3 = boto3.client('s3', region_name='us-east-1')
 BUCKET_NAME = os.environ.get('S3_BUCKET', 'citadel-audio-ctrlz')
 
@@ -467,14 +475,14 @@ def fmt(template, **kwargs):
 
 def generate_form_i(case_data):
     # ── Complainant details ──────────────────────────────────────────────────
-    complainant_name    = case_data.get('complainant_name', '___________________')
-    father_name         = case_data.get('father_name', 'Shri ___________________')
-    age                 = case_data.get('age', '____')
-    complainant_address = case_data.get('complainant_address', '___________________________________, Uttar Pradesh')
+    complainant_name    = blank(case_data.get('complainant_name'), 25)
+    father_name         = blank(case_data.get('father_name'), 25)
+    age                 = blank(case_data.get('age'), 4)
+    complainant_address = case_data.get('complainant_address', 'Lucknow, Uttar Pradesh')
 
     # ── Opposite party — supports both old and new field names ──────────────
-    opposite_party = (case_data.get('company_name') or case_data.get('opposite_party') or 'Unknown Company')
-    op_address     = case_data.get('op_address', 'Corporate Office, ___________________')
+    opposite_party = blank(case_data.get('company_name') or case_data.get('opposite_party'), 25)
+    op_address     = case_data.get('op_address', 'Corporate Office, New Delhi - 110001')
 
     # ── Issue type ───────────────────────────────────────────────────────────
     issue_type  = case_data.get('issue_type') or 'unauthorized_charge'
@@ -989,7 +997,7 @@ def lambda_handler(event, context):
     try:
         body      = json.loads(event.get('body', '{}'))
         case_data = body.get('case_data', {})
-        print("CASE DATA RECEIVED:", json.dumps(case_data))
+        print('CASE DATA RECEIVED:', json.dumps(case_data))
 
         # Support both old field names (opposite_party, section) and
         # new generalized field names (company_name, legal_section)
@@ -1026,6 +1034,8 @@ def lambda_handler(event, context):
 
     except Exception as e:
         print(f"Error generating PDF: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return {
             "statusCode": 500,
             "body": json.dumps({"error": str(e)})
