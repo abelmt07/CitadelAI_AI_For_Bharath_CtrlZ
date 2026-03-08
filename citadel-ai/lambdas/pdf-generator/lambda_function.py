@@ -18,6 +18,9 @@ def blank(val, length=20):
         return '_' * length
     return v
 
+def underline_blank(length=25):
+    return "<u>" + ("&nbsp;" * length) + "</u>"
+
 s3 = boto3.client('s3', region_name='us-east-1')
 BUCKET_NAME = os.environ.get('S3_BUCKET', 'citadel-audio-ctrlz')
 
@@ -475,14 +478,14 @@ def fmt(template, **kwargs):
 
 def generate_form_i(case_data):
     # ── Complainant details ──────────────────────────────────────────────────
-    complainant_name    = blank(case_data.get('complainant_name'), 25)
-    father_name         = blank(case_data.get('father_name'), 25)
-    age                 = blank(case_data.get('age'), 4)
-    complainant_address = case_data.get('complainant_address', 'Lucknow, Uttar Pradesh')
+    complainant_name    = underline_blank(25)
+    father_name         = underline_blank(25)
+    age                 = underline_blank(4)
+    complainant_address = underline_blank(40)
 
     # ── Opposite party — supports both old and new field names ──────────────
-    opposite_party = blank(case_data.get('company_name') or case_data.get('opposite_party'), 25)
-    op_address     = case_data.get('op_address', 'Corporate Office, New Delhi - 110001')
+    opposite_party = underline_blank(30)
+    op_address     = underline_blank(40)
 
     # ── Issue type ───────────────────────────────────────────────────────────
     issue_type  = case_data.get('issue_type') or 'unauthorized_charge'
