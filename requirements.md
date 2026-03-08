@@ -24,7 +24,7 @@
 
 ### Target Users
 
-**Primary**: Bharath native consumers in Tier 2/3 cities (pilot: Hindi-Speaking)
+**Primary**: Bharat native consumers in Tier 2/3 cities (pilot: Hindi-Speaking)
 - Age: 25-60 years
 - Profile: Limited English, basic smartphone use, WhatsApp-native
 - Pain: Facing consumer disputes (telecom fraud, defective products, service failures)
@@ -40,50 +40,48 @@
 | Feature | User Experience | Technical Implementation | Success Metric |
 |---------|----------------|-------------------------|----------------|
 | **Voice-First Native Intake** | Records complaint in natural native speech | Amazon Transcribe + Hindi language model | >85% transcription accuracy |
-| **AI Strategy Adviser** | Identifies issue type, suggests legal strategy | Claude 3 via Bedrock + Consumer Protection Act knowledge | >90% correct issue classification |
+| **AI Strategy Adviser** | Identifies issue type, suggests legal strategy | **Amazon Nova Lite** via Bedrock + Consumer Protection Act knowledge | >90% correct issue classification |
 | **Evidence Validator** | Asks for specific proof (SMS, receipts, dates) | Rule-based validation: Invoice presence? Date within limitation period (2 years)? Jurisdiction match (District/State/National Commission based on claim value)? | 100% mandatory fields collected |
-| **Plain-Language Law Guide** | Explains rights in conversational language | Cohere Embed + vector search + Claude 3 translation | User comprehension >4/5 rating |
-| **Instant Legal Draft** | Generates complete Form I with legal grounds | Claude 3 + structured templates + PDF generation | 100% court-compliant format |
+| **Plain-Language Law Guide** | Explains rights in conversational language | **Amazon Nova Lite** with hardcoded CPA section references | User comprehension >4/5 rating |
+| **Instant Legal Draft** | Generates complete Form I with legal grounds | **Amazon Nova Lite** + structured templates + PDF generation | 100% court-compliant format |
 
 ### Technical Architecture
+
 ```mermaid
 graph LR
     A[Voice Input] --> B[Amazon Transcribe<br/>Speech→Text<br/><i>Hindi pilot</i>]
-    B --> C[Bedrock<br/>Claude 3 Analysis]
+    B --> C[Bedrock<br/><b>Amazon Nova Lite</b> Analysis]
     C --> D[Entity Extraction<br/>& Structuring Engine]
-    C --> E[Cohere Embed<br/>Legal Knowledge Retrieval]
-    D --> F[Evidence Validator<br/><i>Invoice? Date? Jurisdiction?</i>]
-    E --> G[Amazon Q Business<br/>Orchestration]
-    F --> G
-    G --> H[Template Engine<br/>Form I Population]
-    H --> I[PDF Generation]
-    I --> J[User Download]
+    D --> E[Evidence Validator<br/><i>Invoice? Date? Jurisdiction?</i>]
+    E --> F[Template Engine<br/>Form I Population]
+    F --> G[PDF Generation]
+    G --> H[User Download]
     
     style A fill:#0B6623,color:#fff
     style B fill:#4F7968,color:#fff
     style C fill:#2A6E6E,color:#fff
-    style D fill:#2A6E6E,color:#fff,stroke:#fff,stroke-width:2px
-    style E fill:#2A6E6E,color:#fff
-    style F fill:#4F7968,color:#fff
+    style D fill:#2A6E6E,color:#fff
+    style E fill:#4F7968,color:#fff
+    style F fill:#0B6623,color:#fff
     style G fill:#0B6623,color:#fff
-    style H fill:#4F7968,color:#fff
-    style I fill:#0B6623,color:#fff
-    style J fill:#2A6E6E,color:#fff
+    style H fill:#2A6E6E,color:#fff
 ```
 
 **Key Technical Decisions**:
 - **Serverless**: Zero infrastructure management, instant scaling
 - **Privacy First**: Voice deleted immediately post-transcription; transcripts 24h TTL; drafts 7-day retention
 - **Cost Optimized**: Pay-per-use, target <₹5 per draft at scale
-- **AWS Native**: Transcribe, Bedrock (Claude 3 + Cohere), Lambda, Q Business
+- **AWS Native**: Transcribe, Bedrock (**Nova Lite**), Lambda
 
 **AWS Services Stack**:
 - **Amazon Transcribe**: Hindi speech-to-text
-- **Amazon Bedrock**: Claude 3 (reasoning) + Cohere Embed (legal search)
-- **Amazon Q Business**: Workflow orchestration
-- **AWS Lambda**: Serverless compute
+- **Amazon Bedrock**: **Nova Lite** (reasoning) + hardcoded legal knowledge
+- **AWS Lambda**: Serverless compute (3 functions: transcription, analysis, PDF)
 - **Amazon S3**: Document storage
-- **Amazon DynamoDB**: Session management
+- **Amazon API Gateway**: Frontend-backend integration
+- **AWS Amplify / Vercel**: Frontend hosting
+
+*Note: Architecture evolved from original design.md to prioritize rapid development and generalization. Cohere Embed, Amazon Q, and DynamoDB were excluded in favor of direct Lambda calls and hardcoded legal knowledge for the MVP.*
 
 ### Success Metrics
 
@@ -113,22 +111,24 @@ graph LR
 - Full case management (first draft only)
 - Court filing integration (manual filing required)
 - Legal representation (guidance only, clear disclaimers)
+- Cohere Embed / vector search (hardcoded CPA sections used instead)
+- Amazon Q orchestration (direct Lambda calls implemented)
+- DynamoDB session state (in-memory only)
 
 **Future Roadmap**:
 
-- **Phase 1 (Now)**: Hindi pilot, WhatsApp integration, voice quality improvements
+- **Phase 1 (Now)**: Hindi pilot with generalized complaint handling (telecom, e‑commerce, food delivery, banking)
 - **Phase 2 (Q2 2026)**: Tamil, Telugu, Malayalam, Marathi + defect tracking
-- **Phase 3 (Q3 2026)**: Gujarati, Kannada, Punjabi, Odia + property disputes
-- **Phase 4 (Q4 2026)**: Bengali, Assamese, Urdu + court e-filing integration
-
+- **Phase 3 (Q3 2026)**: Court e-filing integration + property disputes
+- **Phase 4 (Q4 2026)**: 12 Indian languages + NGO partnership dashboard
 
 ### Technical Constraints & Assumptions
 
 **Hackathon Constraints**:
-- **48-hour development window**
-- **AWS free tier + $100 budget**
+- **5-day development window** (post‑selection)
+- **AWS credits + $100 budget**
 - **Team of 4 developers**
-- **Stable demo for 15-minute presentation**
+- **Stable demo for submission package**
 
 **Key Assumptions**:
 - Amazon Transcribe Hindi accuracy sufficient for legal use
@@ -140,8 +140,8 @@ graph LR
 
 - **Disclaimers**: Clear "guidance not legal advice" messaging throughout interface
 - **Privacy**: Voice recordings deleted after processing, user data anonymized
-- **Accuracy**: All legal citations verified against Consumer Protection Act 2019
-- **Liability**: System provides document templates, users responsible for filing accuracy
+- **Accuracy**: All legal citations verified against the Consumer Protection Act 2019
+- **Liability**: System provides document templates; users are responsible for filing accuracy
 - **Compliance**: Data stored in Indian AWS regions, GDPR-equivalent privacy protection
 
 ### Non-Functional Requirements
@@ -153,12 +153,10 @@ graph LR
 - Template engine supports multilingual Form I variants
 
 **Data Lifecycle:**
-- Voice: Deleted immediately post-transcription
+- Voice: Deleted post-transcription immediately
 - Transcript: Stored 24h for session continuity, then purged
 - Form I draft: User-downloaded; 7-day retention for re-download only
 
 ---
 
-
 **Bottom Line**: Citadel AI transforms the economics of consumer justice. Instead of choosing between ₹299 theft and ₹5,000 lawyer fees, Ramesh gets a court-ready legal draft in under **2 minutes** for <₹5. **This isn't legal tech—it's justice acceleration.**
-
