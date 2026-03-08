@@ -36,7 +36,7 @@ sequenceDiagram
     App-->>Ramesh: Download ready
     
     Note over Ramesh,Template: Target: Sub-2-minutes
-    ```
+```
 
 ### Architectural Components
 
@@ -74,7 +74,8 @@ graph LR
     style F fill:#4F7968,color:#fff
     style G fill:#0B6623,color:#fff
     style H fill:#2A6E6E,color:#fff
-    style I fill:#4F7968,color:#fff```
+    style I fill:#4F7968,color:#fff
+```
 
 
 ---
@@ -167,4 +168,5 @@ graph LR
 ---
 
 **The Bottom Line**: This isn't just a hackathon project—it's a production-ready architecture that can serve 1 million users while maintaining the sub-2-minute promise that makes justice accessible to Ramesh and millions like him across India. By simplifying the stack, we've made it **buildable in 5 days** and **scalable for the future**.
+
 
