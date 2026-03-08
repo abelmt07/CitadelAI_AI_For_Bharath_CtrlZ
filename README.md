@@ -119,7 +119,7 @@ citadel-ai/
 ├── pdf-generator/
 │ └── lambda_function.py
 
-
+```
 ---
 
 ## Branch Strategy
