@@ -467,14 +467,14 @@ def fmt(template, **kwargs):
 
 def generate_form_i(case_data):
     # ── Complainant details ──────────────────────────────────────────────────
-    complainant_name    = case_data.get('complainant_name', 'Ramesh Kumar')
-    father_name         = case_data.get('father_name', 'Shri [Father Name]')
-    age                 = case_data.get('age', '[Age]')
-    complainant_address = case_data.get('complainant_address', 'Lucknow, Uttar Pradesh')
+    complainant_name    = case_data.get('complainant_name', '___________________')
+    father_name         = case_data.get('father_name', 'Shri ___________________')
+    age                 = case_data.get('age', '____')
+    complainant_address = case_data.get('complainant_address', '___________________________________, Uttar Pradesh')
 
     # ── Opposite party — supports both old and new field names ──────────────
     opposite_party = (case_data.get('company_name') or case_data.get('opposite_party') or 'Unknown Company')
-    op_address     = case_data.get('op_address', 'Corporate Office, New Delhi - 110001')
+    op_address     = case_data.get('op_address', 'Corporate Office, ___________________')
 
     # ── Issue type ───────────────────────────────────────────────────────────
     issue_type  = case_data.get('issue_type') or 'unauthorized_charge'
@@ -989,6 +989,7 @@ def lambda_handler(event, context):
     try:
         body      = json.loads(event.get('body', '{}'))
         case_data = body.get('case_data', {})
+        print("CASE DATA RECEIVED:", json.dumps(case_data))
 
         # Support both old field names (opposite_party, section) and
         # new generalized field names (company_name, legal_section)
