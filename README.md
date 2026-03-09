@@ -91,32 +91,46 @@ Legal complaints require understanding context, extracting entities (amounts, da
 After reorganization, the repository is clean and logically grouped:
 
 ```
-citadel-ai/
-├── .gitignore
-├── README.md
-├── requirements.md
-├── design.md
-├── context.md
-├── index.html # Main frontend entry point
-├── docs/
-│ ├── demo-script.md
-│ ├── form-i-sample.pdf
-│ ├── TeamCtrlZ_CitadelAI_AI_for_Bharat.pdf
-│ └── test-audio/
-│ ├── recording1.m4a
-│ ├── recording2.m4a
-│ ├── recording3.m4a
-│ └── expected_outcomes.txt
-├── frontend/
-│ └── assets/
-│ └── logo.png
-└── lambdas/
-├── transcribe-processor/
-│ └── lambda_function.py
-├── nova-analyzer
-│ └── lambda_function.py
-├── pdf-generator/
-│ └── lambda_function.py
+CitadelAI_AI_For_Bharath_CtrlZ/                     ← REPOSITORY ROOT 
+│
+├── README.md                               ← Project overview
+├── requirements.md                          ← Updated requirements doc
+├── design.md                                ← System design document
+├── DEPLOYMENT.md                            ← Deployment instructions
+├── LICENSE                                   ← Apache 2.0 license
+├── .gitignore                                ← Git ignore rules
+├── .env.example                              ← Environment variables template (root)
+├── index.html                                ← Main frontend entry point
+├── context.md                                ← Project context notes
+│
+├── docs/                                     ← Documentation assets
+│   ├── form-i-sample.pdf
+│   ├── IdeaSubmission_TeamCtrlZ_CitadelAI_AI_for_Bharat.pdf
+│   └── test-audio/
+│       ├── recording1.m4a
+│       ├── recording2.m4a
+│       ├── recording3.m4a
+│       └── expected_outcomes.txt
+│
+├── frontend/                                 ← Frontend assets
+│   ├── assets/
+│   │   ├── logo.png
+│   │   └── .env.example                      ← Frontend env example
+│   └── index.html
+│
+└── lambdas/                                  ← All backend Lambda functions
+    ├── transcribe-processor/
+    │   ├── lambda_function.py
+    ├── nova-analyzer/                     
+    │   ├── lambda_function.py
+    ├── pdf-generator/
+    │   ├── lambda_function.py
+    │   └── templates/
+    │       └── form_i_template.py
+    ├── transcribe-poll/
+        ├── lambda_function.py                    
+    └── get-url/
+        ├── lambda_function.py                                            
 ```
 ---
 
@@ -129,8 +143,8 @@ citadel-ai/
 
 ## Documentation
 
-- [Requirements & User Stories](requirements.md) (original submission)  
-- [System Design & Architecture](design.md) (original submission)  
+- [Requirements & User Stories](requirements.md) (Updated from original submission)  
+- [System Design & Architecture](design.md) (Updated from original submission)  
 
 ---
 
