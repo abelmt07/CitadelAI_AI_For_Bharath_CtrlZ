@@ -32,7 +32,7 @@
 
 1. **Record** — User speaks a complaint in Hindi via real-time audio capture (`index.html`)  
 2. **Transcribe** — Amazon Transcribe converts speech to text (`lambdas/transcribe-processor/lambda_function.py`)  
-3. **Analyze** — **Amazon Nova Lite** on Bedrock extracts legal strategy (`lambdas/nova-analyzer/lambda_function.py`)  
+3. **Analyze** — Amazon Nova Lite on Bedrock extracts legal strategy (`lambdas/nova-analyzer/lambda_function.py`)  
 4. **Validate** — Dynamic evidence checklist tailored to the issue type (frontend logic)  
 5. **Generate** — Court-compliant Form I PDF populated with extracted details (`lambdas/pdf-generator/lambda_function.py`)  
 6. **Download** — Ready to file at consumer forum  
@@ -47,7 +47,7 @@
 |--------|--------|
 | Hindi voice recording | ✅ Working |
 | Transcription via Amazon Transcribe | ✅ Working |
-| Legal analysis via **Amazon Nova Lite** | ✅ Working |
+| Legal analysis via Amazon Nova Lite | ✅ Working |
 | Dynamic evidence checklist | ✅ Working |
 | Form I PDF generation (with dynamic fields) | ✅ Working |
 | Presigned URL download | ✅ Working |
@@ -91,7 +91,6 @@ Legal complaints require understanding context, extracting entities (amounts, da
 After reorganization, the repository is clean and logically grouped:
 
 ```
-
 citadel-ai/
 ├── .gitignore
 ├── README.md
@@ -118,7 +117,6 @@ citadel-ai/
 │ └── lambda_function.py
 ├── pdf-generator/
 │ └── lambda_function.py
-
 ```
 ---
 
@@ -133,7 +131,6 @@ citadel-ai/
 
 - [Requirements & User Stories](requirements.md) (original submission)  
 - [System Design & Architecture](design.md) (original submission)  
-- [Demo Script](docs/demo-script.md)  
 
 ---
 
@@ -142,7 +139,7 @@ citadel-ai/
 | Name | Role | Responsibilities |
 |------|------|------------------|
 | Abel Mahesh Tharakan | Integration & Strategy Lead | Documentation, testing, team coordination, demo video |
-| Shaury Tandon | AI/ML Engineering | **Nova Lite** Lambda, PDF generation, prompt engineering |
+| Shaury Tandon | AI/ML Engineering | Nova Lite Lambda, PDF generation, prompt engineering |
 | Aditya Nair | Cloud & Backend | AWS infrastructure, Lambda functions, API Gateway, Vercel hosting |
 | Abhinav Mankar | Frontend & UX | HTML/Tailwind UI, Cursor, audio recording, evidence validator |
 
@@ -152,7 +149,7 @@ citadel-ai/
 
 **AWS AI for Bharat Hackathon**
 
-- ✅ Generative AI on AWS (Bedrock + **Nova Lite**)  
+- ✅ Generative AI on AWS (Bedrock + Nova Lite)  
 - ✅ Kiro for spec-driven development (used to generate requirements and design docs)  
 - ✅ Serverless architecture (Lambda + S3 + API Gateway)  
 - ✅ Voice-first, Hindi-native design  
