@@ -119,17 +119,17 @@ CitadelAI_AI_For_Bharath_CtrlZ/               ← REPOSITORY ROOT
 │
 └── lambdas/                                  ← All backend Lambda functions
     ├── transcribe-processor/
-    │   ├── lambda_function.py
+    │   └── lambda_function.py
     ├── nova-analyzer/                     
-    │   ├── lambda_function.py
+    │   └── lambda_function.py
     ├── pdf-generator/
     │   ├── lambda_function.py
     │   └── templates/
     │       └── form_i_template.py
     ├── transcribe-poll/
-        ├── lambda_function.py                    
+        └── lambda_function.py                    
     └── get-url/
-        ├── lambda_function.py                                            
+        └── lambda_function.py                                            
 ```
 ---
 
