@@ -67,10 +67,10 @@
 
 | Component | Service |
 |-----------|---------|
-| Frontend Hosting | **Vercel** |
+| Frontend Hosting | Vercel |
 | User Interface | HTML + Tailwind CSS (`index.html` at root) |
 | Speech-to-Text | Amazon Transcribe (hi-IN) – `lambdas/transcribe-processor/` |
-| Legal Analysis | **Amazon Nova Lite** on Bedrock – `lambdas/nova-analyzer/` |
+| Legal Analysis | Amazon Nova Lite on Bedrock – `lambdas/nova-analyzer/` |
 | PDF Generation | AWS Lambda (Python 3.9) – `lambdas/pdf-generator/` |
 | Storage | Amazon S3 |
 | API Layer | Amazon API Gateway |
