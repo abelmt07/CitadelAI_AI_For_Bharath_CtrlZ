@@ -91,17 +91,16 @@ Legal complaints require understanding context, extracting entities (amounts, da
 After reorganization, the repository is clean and logically grouped:
 
 ```
-CitadelAI_AI_For_Bharath_CtrlZ/                     ← REPOSITORY ROOT 
+CitadelAI_AI_For_Bharath_CtrlZ/               ← REPOSITORY ROOT 
 │
-├── README.md                               ← Project overview
-├── requirements.md                          ← Updated requirements doc
-├── design.md                                ← System design document
-├── DEPLOYMENT.md                            ← Deployment instructions
+├── README.md                                 ← Project overview
+├── requirements.md                           ← Updated requirements doc
+├── design.md                                 ← System design document
+├── DEPLOYMENT.md                             ← Deployment instructions
 ├── LICENSE                                   ← Apache 2.0 license
 ├── .gitignore                                ← Git ignore rules
 ├── .env.example                              ← Environment variables template (root)
 ├── index.html                                ← Main frontend entry point
-├── context.md                                ← Project context notes
 │
 ├── docs/                                     ← Documentation assets
 │   ├── form-i-sample.pdf
