@@ -1,7 +1,7 @@
 # Citadel AI: Your First-Strike Legal Draft
 ## Voice-First Legal Draft Generator for Bharat
 
-> Transforming a Hindi voice complaint into a court-ready "Form I" in under 2 minutes.
+> Transforming a Hindi/English voice complaint into a court-ready "Form I" in under 2 minutes.
 
 **The Problem**: 77% of Indians cannot access legal remedies. A ₹299 fraud versus a ₹5,000 lawyer fee represents economic injustice at scale.
 
@@ -20,7 +20,7 @@
 
 1. Click the **Working Prototype** link above  
 2. Allow microphone access when prompted  
-3. Tap the microphone and speak a Hindi complaint (e.g., "मुझसे हर महीने ₹299 कट रहा है")  
+3. Tap the microphone and speak a Hindi/English complaint (e.g., "मुझसे हर महीने ₹299 कट रहा है")  
 4. Wait 30–60 seconds for processing  
 5. Download your Form I PDF  
 
@@ -30,7 +30,7 @@
 
 ## How It Works (Implemented Features)
 
-1. **Record** — User speaks a complaint in Hindi via real-time audio capture (`index.html`)  
+1. **Record** — User speaks a complaint in Hindi/English via real-time audio capture (`index.html`)  
 2. **Transcribe** — Amazon Transcribe converts speech to text (`lambdas/transcribe-processor/lambda_function.py`)  
 3. **Analyze** — Amazon Nova Lite on Bedrock extracts legal strategy (`lambdas/nova-analyzer/lambda_function.py`)  
 4. **Validate** — Dynamic evidence checklist tailored to the issue type (frontend logic)  
@@ -45,7 +45,7 @@
 
 | Feature | Status |
 |--------|--------|
-| Hindi voice recording | ✅ Working |
+| Hindi & English voice recording | ✅ Working |
 | Transcription via Amazon Transcribe | ✅ Working |
 | Legal analysis via Amazon Nova Lite | ✅ Working |
 | Dynamic evidence checklist | ✅ Working |
@@ -58,7 +58,7 @@
 - Cohere Embed (hardcoded Consumer Protection Act sections used instead)  
 - Amazon Q orchestration (direct Lambda calls implemented)  
 - DynamoDB session state (in-memory only)  
-- Multi-language support (Hindi only)  
+- Multi-language support (Hindi & English only)  
 - Real-time streaming (batch upload)  
 
 ---
