@@ -12,7 +12,7 @@
 ## Live Demo
 
 - **Working Prototype**:  https://citai.vercel.app/
-- **Demo Video**: [YouTube link here]
+- **Demo Video**: https://youtu.be/ISkvOVzXVIg
 
 ---
 
